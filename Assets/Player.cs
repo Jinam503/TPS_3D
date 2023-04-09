@@ -8,16 +8,19 @@ public class Player : MonoBehaviour
     private float mY;
     private float h;
     private float v;
+
     public Transform cameraArm;
     public float moveSpeed;
-    // Start is called before the first frame update
+
+    private Animator anim;
+
     void Start()
     {
+        anim = transform.GetChild(0).GetComponent<Animator>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Inputs();
@@ -55,5 +58,17 @@ public class Player : MonoBehaviour
 
         transform.forward = foward;
         transform.position += dir * Time.deltaTime * moveSpeed;
+
+        anim.SetFloat("Horizontal", h);
+        anim.SetFloat("Vertical", v);
+
+        if (h != 0 || v != 0)
+        {
+            anim.SetBool("IsMoving",true);
+        }
+        else
+        {
+            anim.SetBool("IsMoving", false);
+        }
     }
 }
