@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        anim = transform.GetChild(0).GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
