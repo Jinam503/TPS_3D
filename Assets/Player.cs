@@ -12,11 +12,11 @@ public class Player : MonoBehaviour
     public Transform cameraArm;
     public float moveSpeed;
 
-    private Animator anim;
+    public Animator anim;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
+        
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -53,11 +53,8 @@ public class Player : MonoBehaviour
     private void Move()
     {
         Vector3 foward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
-        Vector3 right = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
-        Vector3 dir = foward * v + right * h;
 
         transform.forward = foward;
-        transform.position += dir * Time.deltaTime * moveSpeed;
 
         anim.SetFloat("Horizontal", h);
         anim.SetFloat("Vertical", v);
