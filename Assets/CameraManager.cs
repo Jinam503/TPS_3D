@@ -80,20 +80,15 @@ public class CameraManager : MonoBehaviour
             (cameraPivot.transform.position, cameraCollisionRadius, direction, out hit, Mathf.Abs(targetPosition), collisionLayers))
         {
             float distance = Vector3.Distance(cameraPivot.position, hit.point);
-            targetPosition =- (distance - cameraCollisionOffset);
-            Debug.Log(targetPosition);
+            targetPosition = -(distance - cameraCollisionOffset);
         }
-        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
         if(Mathf.Abs(targetPosition) < minCollisionOffSet)
         {
             targetPosition = -minCollisionOffSet;
         }
-        if (Mathf.Abs(targetPosition) > 2f)
-        {
-            targetPosition = -2f;
-        }
-
-        cameraVectorPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, 0.2f);
+        cameraVectorPosition.z = targetPosition;
+        //cameraVectorPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, 0.2f);
         cameraTransform.localPosition = cameraVectorPosition;
     }
 }
