@@ -883,6 +883,7 @@ MonoBehaviour:
   verticalInput: 0
   horizontalInput: 0
   input_LShift: 0
+  input_Ctrl: 0
 --- !u!114 &64741295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -895,6 +896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc0e3620a00a57e47a8d35bdb6442715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInteracting: 0
 --- !u!114 &64741296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,8 +910,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 1361868073}
+  inAirTimer: 0
+  leapingVelocity: 1
+  fallingVelocity: 9.8
+  raycastHeightOffset: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
   isSprinting: 0
   movementMode: 0
+  isGrounded: 1
   walkingSpeed: 1.5
   runningSpeed: 5
   sprintingSpeed: 7
@@ -2276,7 +2286,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &199746933
 MonoBehaviour:
@@ -4218,7 +4228,7 @@ Transform:
   - {fileID: 1290436397}
   - {fileID: 320344004}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &379105612
 PrefabInstance:
@@ -5280,7 +5290,7 @@ Transform:
   - {fileID: 1447984350}
   - {fileID: 686506697}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &478349765
 PrefabInstance:
@@ -10801,7 +10811,7 @@ Transform:
   m_GameObject: {fileID: 902100238}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -7.51, y: -9.91251, z: -5.71}
-  m_LocalScale: {x: 10.770001, y: 3.1736, z: 10.095}
+  m_LocalScale: {x: 10.770001, y: 8.003721, z: 10.095}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 474882000}
@@ -16270,7 +16280,7 @@ Transform:
   m_Children:
   - {fileID: 1064356144}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1361868074
 MonoBehaviour:
@@ -16297,8 +16307,8 @@ MonoBehaviour:
   cameraPivotSpeed: 0.1
   lookAngle: 0
   pivotAngle: 0
-  minPivotAngle: -89
-  maxPivotAngle: 89
+  minPivotAngle: -80
+  maxPivotAngle: 80
 --- !u!1001 &1363236892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23960,7 +23970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 527f35fbdb4d131449052521d6a03e77, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 527f35fbdb4d131449052521d6a03e77, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23968,7 +23978,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 527f35fbdb4d131449052521d6a03e77, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.01
+      value: 5.38
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 527f35fbdb4d131449052521d6a03e77, type: 3}
       propertyPath: m_LocalPosition.z

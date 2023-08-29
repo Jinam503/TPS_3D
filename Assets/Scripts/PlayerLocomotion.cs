@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class PlayerLocomotion : MonoBehaviour
 {
+    PlayerManager playerManager;
+    AnimatorManager animatorManager;
     InputManager inputManager;
 
     Vector3 moveDir;
     public Transform cameraObject;
     Rigidbody playerRigidbody;
 
+    [Header("Falling")]
+    public float inAirTimer;
+    public float leapingVelocity;
+    public float fallingVelocity;
+    public float raycastHeightOffset = 0.5f;
+    public LayerMask groundLayer;
+
+    [Header("Movement Flags")]
     public bool isSprinting;
     public bool movementMode; // true => run, false => walk
+    public bool isGrounded;
 
     [Header("Movement Speeds")]
     public float walkingSpeed = 1.5f;
@@ -23,11 +34,17 @@ public class PlayerLocomotion : MonoBehaviour
     {
         inputManager = GetComponent<InputManager>();
         playerRigidbody = GetComponent<Rigidbody>();
-
+        playerManager = GetComponent<PlayerManager>();
+        animatorManager = GetComponent<AnimatorManager>();
     }
     
     public void HandleAllMovement()
     {
+        HandleFallingAndLanding();
+
+        if (playerManager.isInteracting)
+            return;
+
         HandleMovement();
         HandleRotation();
     }
@@ -79,5 +96,37 @@ public class PlayerLocomotion : MonoBehaviour
         transform.rotation = playerRotation;
     }
 
-    
+    private void HandleFallingAndLanding()
+    {
+        RaycastHit hit;
+        Vector3 raycastOrigin = transform.position;
+        raycastOrigin.y += raycastHeightOffset;
+
+        if (!isGrounded)
+        {
+            if (!playerManager.isInteracting)
+            {
+                animatorManager.PlayTargetAnimation("Falling", true);
+            }
+
+            inAirTimer += Time.deltaTime;
+            playerRigidbody.AddForce(transform.forward * leapingVelocity);
+            playerRigidbody.AddForce(Vector3.down * fallingVelocity * inAirTimer);
+        }
+
+        if (Physics.SphereCast(raycastOrigin, 0.2f, Vector3.down, out hit, 0.5f, groundLayer))
+        {
+            if (!isGrounded && playerManager.isInteracting)
+            {
+                animatorManager.PlayTargetAnimation("Land", true);
+            }
+            inAirTimer = 0;
+            isGrounded = true;
+            playerManager.isInteracting = false;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+    }
 }
