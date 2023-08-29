@@ -879,8 +879,10 @@ MonoBehaviour:
   cameraInput: {x: 0, y: 0}
   cameraInputX: 0
   cameraInputY: 0
+  moveAmount: 0
   verticalInput: 0
   horizontalInput: 0
+  input_LShift: 0
 --- !u!114 &64741295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,7 +908,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 1361868073}
-  movementSpeed: 7
+  isSprinting: 0
+  movementMode: 0
+  walkingSpeed: 1.5
+  runningSpeed: 5
+  sprintingSpeed: 7
   rotationSpeed: 15
 --- !u!114 &64741298
 MonoBehaviour:
@@ -10794,8 +10800,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902100238}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -2.6581798, y: -9.91251, z: -5.708576}
-  m_LocalScale: {x: 10.770001, y: 3.1736, z: 1}
+  m_LocalPosition: {x: -7.51, y: -9.91251, z: -5.71}
+  m_LocalScale: {x: 10.770001, y: 3.1736, z: 10.095}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 474882000}
@@ -23958,11 +23964,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 527f35fbdb4d131449052521d6a03e77, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -7.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 527f35fbdb4d131449052521d6a03e77, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.01
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 527f35fbdb4d131449052521d6a03e77, type: 3}
       propertyPath: m_LocalPosition.z

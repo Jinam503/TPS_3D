@@ -5,6 +5,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
+    PlayerLocomotion playerLocomotion;
     AnimatorManager animatorManager;
 
     [SerializeField]
@@ -16,14 +17,18 @@ public class InputManager : MonoBehaviour
     public float cameraInputX;
     public float cameraInputY;
 
-    private float moveAmount;
+    public float moveAmount;
 
     public float verticalInput;
     public float horizontalInput;
 
+    public bool input_LShift;
+    public bool input_Ctrl;
+
     private void Awake()
     {
         animatorManager = GetComponent<AnimatorManager>();
+        playerLocomotion = GetComponent<PlayerLocomotion>();
     }
 
     private void OnEnable()
@@ -33,7 +38,12 @@ public class InputManager : MonoBehaviour
             playerControls = new PlayerControls();
 
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
-            playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>(); 
+            playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
+
+            playerControls.PlayerActions.Sprint.performed += i => input_LShift = true;
+            playerControls.PlayerActions.Sprint.canceled += i => input_LShift = false;
+
+            playerControls.PlayerActions.ToggleMovmentMode.performed += i => input_Ctrl = !input_Ctrl;
         }
 
         playerControls.Enable();
@@ -47,6 +57,8 @@ public class InputManager : MonoBehaviour
     public void HandleAllInputs()
     {
         HandleMovementInput();
+        HandleSprintingInput();
+        HandleMovementModeInput();
         //HandleJumpInput
         //HandleActionInput
     }
@@ -60,6 +72,30 @@ public class InputManager : MonoBehaviour
         cameraInputX = cameraInput.x;
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
-        animatorManager.UpdateAnimatorValues(0, moveAmount);
+        animatorManager.UpdateAnimatorValues(0, moveAmount, playerLocomotion.isSprinting, playerLocomotion.movementMode);
+    }
+
+    private void HandleSprintingInput()
+    {
+        if (input_LShift)
+        {
+            playerLocomotion.isSprinting = true;
+        }
+        else
+        {
+            playerLocomotion.isSprinting = false;
+        }
+    }
+
+    private void HandleMovementModeInput()
+    {
+        if (input_Ctrl)
+        {
+            playerLocomotion.movementMode = true;
+        }
+        else
+        {
+            playerLocomotion.movementMode = false;
+        }
     }
 }
