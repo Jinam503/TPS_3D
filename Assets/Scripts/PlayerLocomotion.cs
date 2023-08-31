@@ -151,12 +151,10 @@ public class PlayerLocomotion : MonoBehaviour
             
             if (playerManager.isInteracting || inputManager.moveAmount > 0)
             {
-                Debug.Log("Moving or interacting");
                 transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime / 0.1f);
             }
             else
             {
-                Debug.Log("stay on ground");
                 transform.position = targetPosition;
             }
         }

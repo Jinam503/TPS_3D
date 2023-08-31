@@ -1,0 +1,11 @@
+Model Information:
+* title:	Desert Tech MDRX
+* source:	https://sketchfab.com/3d-models/desert-tech-mdrx-0908741bff6c4f8bbd827ec3b9e9b98f
+* author:	FREEZLER (https://sketchfab.com/FREEZLER)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Desert Tech MDRX" (https://sketchfab.com/3d-models/desert-tech-mdrx-0908741bff6c4f8bbd827ec3b9e9b98f) by FREEZLER (https://sketchfab.com/FREEZLER) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

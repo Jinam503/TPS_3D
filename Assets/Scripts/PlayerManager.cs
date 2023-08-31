@@ -14,8 +14,8 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 
         animator = GetComponent<Animator>();
         inputManager = GetComponent<InputManager>();
