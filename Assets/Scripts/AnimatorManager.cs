@@ -26,17 +26,17 @@ public class AnimatorManager : MonoBehaviour
     {
         if(verticalMovement > 0.5f)
         {
-            if (movementMode)
+            if (!movementMode)
             {
                 verticalMovement = 1f;
             }
             else
             {
-                verticalMovement = 0.5f;
+                verticalMovement = 2f;
             }
             if (isSprinting)
             {
-                verticalMovement = 2;
+                verticalMovement = 3;
             }
         }
         animator.SetFloat(horizontal, horizontalMovement, 0.1f, Time.deltaTime);

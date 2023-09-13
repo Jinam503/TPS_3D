@@ -10,6 +10,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     Vector3 moveDir;
     public Transform cameraObject;
+
     Rigidbody playerRigidbody;
 
     [Header("Falling")]
@@ -23,24 +24,26 @@ public class PlayerLocomotion : MonoBehaviour
     public bool movementMode; // true => run, false => walk
     public bool isGrounded;
     public bool isJumping;
+    public bool isAiming;
+    public bool isFiring;
 
     [Header("Movement Speeds")]
     public float walkingSpeed = 1.5f;
     public float runningSpeed = 5f;
     public float sprintingSpeed = 7;
     public float rotationSpeed = 15;
+    public float aimingSpeed = 0.7f;
 
-    [Header("Jump Speeds")]
-    public float jumpHeight = 3;
-    public float gravityIntensity = -15;
-
+    [Header("Jump Stats")]
+    public float jumpHeight = 1;
+    public float gravityIntensity = 10;
 
     private void Awake()
     {
         inputManager = GetComponent<InputManager>();
         playerRigidbody = GetComponent<Rigidbody>();
         playerManager = GetComponent<PlayerManager>();
-        animatorManager = GetComponent<AnimatorManager>();
+        animatorManager = GetComponentInChildren<AnimatorManager>();
     }
     
     public void HandleAllMovement()
@@ -52,6 +55,8 @@ public class PlayerLocomotion : MonoBehaviour
 
         HandleMovement();
         HandleRotation();
+        HandleAiming();
+        HandleFiring();
     }
 
     private void HandleMovement()
@@ -74,9 +79,13 @@ public class PlayerLocomotion : MonoBehaviour
             {
                 moveDir *= runningSpeed;
             }
-            else
+            else if(!isAiming)
             {
                 moveDir *= walkingSpeed;
+            }
+            else
+            {
+                moveDir *= aimingSpeed;
             }
         }
 
@@ -92,8 +101,22 @@ public class PlayerLocomotion : MonoBehaviour
     {
         if (!isGrounded && !playerManager.isInteracting)
             return;
-
         Vector3 targetDirection = Vector3.zero;
+        Quaternion targetRotation = Quaternion.identity;
+        Quaternion playerRotation = Quaternion.identity;
+
+        if (isAiming)
+        {
+            targetDirection = cameraObject.forward;
+            targetDirection.Normalize();
+            targetRotation = Quaternion.LookRotation(targetDirection);
+
+            playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+            transform.rotation = playerRotation;
+
+            return;
+        }
 
         targetDirection = cameraObject.forward * inputManager.verticalInput;
         targetDirection += cameraObject.right * inputManager.horizontalInput;
@@ -105,8 +128,8 @@ public class PlayerLocomotion : MonoBehaviour
             targetDirection = transform.forward;
         }
 
-        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        targetRotation = Quaternion.LookRotation(targetDirection);
+        playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         transform.rotation = playerRotation;
     }
@@ -176,5 +199,15 @@ public class PlayerLocomotion : MonoBehaviour
             playerRigidbody.velocity = playerVelocity;
             
         }
+    }
+
+    private void HandleAiming()
+    {
+        animatorManager.animator.SetBool("IsAiming", isAiming);
+    }
+
+    private void HandleFiring()
+    {
+        animatorManager.animator.SetBool("IsFiring", isFiring);
     }
 }
