@@ -26,6 +26,7 @@ public class PlayerLocomotion : MonoBehaviour
     public bool isJumping;
     public bool isAiming;
     public bool isFiring;
+    public bool isDied;
 
     [Header("Movement Speeds")]
     public float walkingSpeed = 1.5f;
@@ -46,12 +47,18 @@ public class PlayerLocomotion : MonoBehaviour
         animatorManager = GetComponentInChildren<AnimatorManager>();
     }
     
-    public void HandleAllMovement()
+    public void HandleAllMovement(bool isInteracting)
     {
+        if (isDied)
+        {
+            playerRigidbody.velocity = Vector3.zero;
+        }
         HandleFallingAndLanding();
 
-        if (playerManager.isInteracting)
+        if (isInteracting)
+        {
             return;
+        }
 
         HandleMovement();
         HandleRotation();
@@ -62,7 +69,7 @@ public class PlayerLocomotion : MonoBehaviour
     private void HandleMovement()
     {
         if (isJumping)
-            return;
+            return; 
 
         moveDir = cameraObject.forward * inputManager.verticalInput;
         moveDir += cameraObject.right * inputManager.horizontalInput;
@@ -101,6 +108,7 @@ public class PlayerLocomotion : MonoBehaviour
     {
         if (!isGrounded && !playerManager.isInteracting)
             return;
+
         Vector3 targetDirection = Vector3.zero;
         Quaternion targetRotation = Quaternion.identity;
         Quaternion playerRotation = Quaternion.identity;
@@ -143,7 +151,7 @@ public class PlayerLocomotion : MonoBehaviour
 
         if (!isGrounded && !isJumping)
         {
-            if (!playerManager.isInteracting)
+            if (!playerManager.isInteracting && !isDied)
             {
                 animatorManager.PlayTargetAnimation("Falling", true);
             }
@@ -153,8 +161,9 @@ public class PlayerLocomotion : MonoBehaviour
         }
 
         if (Physics.SphereCast(raycastOrigin, 0.2f, Vector3.down, out hit, 0.5f, groundLayer))
+            //땅에 닿았는가
         {
-            if (!isGrounded && playerManager.isInteracting)
+            if (!isGrounded && playerManager.isInteracting && !isDied)
             {
                 animatorManager.PlayTargetAnimation("Land", true);
             }
@@ -170,7 +179,7 @@ public class PlayerLocomotion : MonoBehaviour
         }
 
         if (isGrounded && !isJumping)
-        {
+        { // 땅에 닿았는데 점프중이 아니면  즉시 위치로 순간이동
             
             if (playerManager.isInteracting || inputManager.moveAmount > 0)
             {
@@ -185,14 +194,14 @@ public class PlayerLocomotion : MonoBehaviour
 
     public void HandleJumping()
     {
+        if (isDied) return;
+
         if (isGrounded)
         {
             animatorManager.animator.SetBool("IsJumping", true);
-            animatorManager.PlayTargetAnimation("Jump", false);
+            animatorManager.PlayTargetAnimation("Jump", true);
 
             float jumpingVelocity = Mathf.Sqrt(gravityIntensity * jumpHeight);
-
-
 
             Vector3 playerVelocity = moveDir;
             playerVelocity.y = jumpingVelocity;

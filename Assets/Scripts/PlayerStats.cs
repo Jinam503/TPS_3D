@@ -11,9 +11,11 @@ public class PlayerStats : MonoBehaviour
     public HealthBar healthBar;
 
     AnimatorManager animatorManager;
+    PlayerLocomotion playerLocomotion;
 
     private void Awake()
     {
+        playerLocomotion = GetComponent<PlayerLocomotion>();
         animatorManager = GetComponentInChildren<AnimatorManager>();
     }
 
@@ -38,12 +40,13 @@ public class PlayerStats : MonoBehaviour
 
         healthBar.SetCurrentHealth(currentHealth);
 
-        animatorManager.PlayTargetAnimation("Hit Reaction", true);
+        animatorManager.PlayTargetAnimation("Hit Reaction", false);
 
         if(currentHealth <= 0)
         {
             currentHealth = 0;
             animatorManager.PlayTargetAnimation("Death From The Front", true);
+            playerLocomotion.isDied = true;
         }
     }
 }

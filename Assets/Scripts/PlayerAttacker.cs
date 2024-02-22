@@ -15,7 +15,7 @@ public class PlayerAttacker : MonoBehaviour
 
     public void HandleFire(WeaponItem weaponItem)
     {
-        if (playerLocomotion.isAiming && !playerLocomotion.isFiring)
+        if (playerLocomotion.isAiming && !playerLocomotion.isFiring && !playerLocomotion.isDied)
         {
             playerLocomotion.isFiring = true;
             animatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false);

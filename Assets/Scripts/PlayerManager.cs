@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,7 @@ public class PlayerManager : MonoBehaviour
     private void FixedUpdate()
     {
         // Player Movement with Rigidbody should be in FixedUpdate. Its kinda rule of Unity;
-        playerLocomotion.HandleAllMovement();
+        playerLocomotion.HandleAllMovement(isInteracting);
     }
 
     private void LateUpdate()

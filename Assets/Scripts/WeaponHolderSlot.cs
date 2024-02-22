@@ -59,7 +59,7 @@ public class WeaponHolderSlot : MonoBehaviour
 
     private void Update()
     {
-        if (currentWeaponModel == null)
+        if (currentWeaponModel == null || playerLocomotion.isDied)
             return;
         if (!playerLocomotion.isGrounded) // jumping
         {
