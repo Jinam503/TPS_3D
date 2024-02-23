@@ -25,7 +25,6 @@ public class InputManager : MonoBehaviour
     public float horizontalInput;
 
     public bool input_LShift;
-    public bool input_Ctrl;
     public bool input_Space;
 
     public bool input_MouseRight;
@@ -54,8 +53,6 @@ public class InputManager : MonoBehaviour
             playerControls.PlayerActions.Aim.performed += i => input_MouseRight = true;
             playerControls.PlayerActions.Aim.canceled += i => input_MouseRight = false;
 
-            playerControls.PlayerActions.ToggleMovmentMode.performed += i => input_Ctrl = !input_Ctrl;
-
             playerControls.PlayerActions.Jump.performed += i => input_Space = true;
 
             playerControls.PlayerActions.Fire.performed += i => input_MouseLeft = true;
@@ -74,7 +71,6 @@ public class InputManager : MonoBehaviour
     {
         HandleMovementInput();
         HandleSprintingInput();
-        HandleMovementModeInput();
         HandleJumpingInput();
         HandleAimingInput();
         HandleFireInput();
@@ -90,10 +86,9 @@ public class InputManager : MonoBehaviour
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
         animatorManager.UpdateAnimatorValues(
-            playerLocomotion.isAiming == false ? 0: horizontalInput,
-            playerLocomotion.isAiming == false ? moveAmount : verticalInput,
-            playerLocomotion.isSprinting,
-            playerLocomotion.movementMode
+            playerAttacker.isAiming == false ? 0: horizontalInput,
+            playerAttacker.isAiming == false ? moveAmount : verticalInput,
+            playerLocomotion.isSprinting
         );
     }
 
@@ -113,18 +108,6 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void HandleMovementModeInput()
-    {
-        if (input_Ctrl)
-        {
-            playerLocomotion.movementMode = true;
-        }
-        else
-        {
-            playerLocomotion.movementMode = false;
-        }
-    }
-
     private void HandleJumpingInput()
     {
         if (input_Space)
@@ -136,18 +119,19 @@ public class InputManager : MonoBehaviour
 
     private void HandleAimingInput()
     {  
-        if (input_MouseRight)
+        if (input_MouseRight && !playerLocomotion.isJumping)
         {
             if (playerLocomotion.isSprinting)
             {
                 playerLocomotion.isSprinting = false;
             }
-            playerLocomotion.isAiming = true;
-            playerLocomotion.movementMode = false;
+            playerAttacker.aimRigWeight = 1f;
+            playerAttacker.isAiming = true;
         }
         else
         {
-            playerLocomotion.isAiming = false;
+            playerAttacker.aimRigWeight = 0f;
+            playerAttacker.isAiming = false;
         }
     }
 
@@ -155,11 +139,12 @@ public class InputManager : MonoBehaviour
     {
         if (input_MouseLeft)
         {
+            playerAttacker.isFiring = true;
             playerAttacker.HandleFire(playerInventory.weaponItem);
         }
         else
         {
-            playerLocomotion.isFiring = false;
+            playerAttacker.isFiring = false;
         }
     }
 }

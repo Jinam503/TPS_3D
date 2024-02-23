@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     InputManager inputManager;
+    PlayerAttacker playerAttacker;
 
     public Transform targetTransform;   // The object the camera will follow
     public Transform cameraPivot;       // The object the camera uses to pivot (look up and down)  
@@ -30,23 +31,24 @@ public class CameraManager : MonoBehaviour
     {
         inputManager = FindAnyObjectByType<InputManager>();
         targetTransform = FindObjectOfType<PlayerManager>().transform;
+        playerAttacker = FindObjectOfType<PlayerManager>().GetComponent<PlayerAttacker>();
         cameraTransform = Camera.main.transform;
-        defaultPosition = cameraTransform.localPosition.z;
+        defaultPosition = -2f;
     }
 
     public void HandleAllCameraMovement()
     {
         FollowTarget();
         RotateCamera();
+        SetDefaultPositionByAiming(); //    Set MaxOffset lower While Aiming ( 조준시 카메라 밀착 )
         HandleCameraCollisions();
     }
 
     private void FollowTarget()
     {
-        // SmoothDamp usually uses in camera in game. But I wont use it.
         Vector3 targetPosition = targetTransform.position;
 
-        transform.position = targetPosition;
+        transform.position = targetPosition; // Move Camera
     }
 
     private void RotateCamera()
@@ -69,6 +71,11 @@ public class CameraManager : MonoBehaviour
         cameraPivot.localRotation = targetRotation;
     }
 
+    private void SetDefaultPositionByAiming()
+    {
+        defaultPosition = playerAttacker.isAiming ? -1f : -2f; // Aimed -> -1, Not Aimed -> -2
+    }
+
     private void HandleCameraCollisions()
     {
         float targetPosition = defaultPosition;
@@ -87,8 +94,7 @@ public class CameraManager : MonoBehaviour
         {
             targetPosition = -minCollisionOffSet;
         }
-        cameraVectorPosition.z = targetPosition;
-        //cameraVectorPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, 0.2f);
+        cameraVectorPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, 0.2f);
         cameraTransform.localPosition = cameraVectorPosition;
     }
 }

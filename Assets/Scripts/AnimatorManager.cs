@@ -22,21 +22,17 @@ public class AnimatorManager : MonoBehaviour
         animator.CrossFade(targetAnimation, 0.1f);
     }
 
-    public void UpdateAnimatorValues(float horizontalMovement, float verticalMovement, bool isSprinting, bool movementMode)
+    public void UpdateAnimatorValues(float horizontalMovement, float verticalMovement, bool isSprinting)
     {
         if(verticalMovement > 0.5f)
         {
-            if (!movementMode)
+            if (isSprinting)
             {
-                verticalMovement = 1f;
+                verticalMovement = 2;
             }
             else
             {
-                verticalMovement = 2f;
-            }
-            if (isSprinting)
-            {
-                verticalMovement = 3;
+                verticalMovement = 1f;
             }
         }
         animator.SetFloat(horizontal, horizontalMovement, 0.1f, Time.deltaTime);

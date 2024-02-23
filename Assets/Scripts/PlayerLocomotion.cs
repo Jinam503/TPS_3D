@@ -7,6 +7,7 @@ public class PlayerLocomotion : MonoBehaviour
     PlayerManager playerManager;
     AnimatorManager animatorManager;
     InputManager inputManager;
+    PlayerAttacker playerAttacker;
 
     Vector3 moveDir;
     public Transform cameraObject;
@@ -21,19 +22,15 @@ public class PlayerLocomotion : MonoBehaviour
 
     [Header("Movement Flags")]
     public bool isSprinting;
-    public bool movementMode; // true => run, false => walk
     public bool isGrounded;
     public bool isJumping;
-    public bool isAiming;
-    public bool isFiring;
     public bool isDied;
 
     [Header("Movement Speeds")]
-    public float walkingSpeed = 1.5f;
-    public float runningSpeed = 5f;
-    public float sprintingSpeed = 7;
-    public float rotationSpeed = 15;
-    public float aimingSpeed = 0.7f;
+    public float walkingSpeed;
+    public float sprintingSpeed;
+    public float rotationSpeed;
+    public float aimingSpeed;
 
     [Header("Jump Stats")]
     public float jumpHeight = 1;
@@ -45,6 +42,7 @@ public class PlayerLocomotion : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         playerManager = GetComponent<PlayerManager>();
         animatorManager = GetComponentInChildren<AnimatorManager>();
+        playerAttacker = GetComponent<PlayerAttacker>();
     }
     
     public void HandleAllMovement(bool isInteracting)
@@ -62,8 +60,6 @@ public class PlayerLocomotion : MonoBehaviour
 
         HandleMovement();
         HandleRotation();
-        HandleAiming();
-        HandleFiring();
     }
 
     private void HandleMovement()
@@ -82,11 +78,7 @@ public class PlayerLocomotion : MonoBehaviour
         }
         else
         {
-            if (movementMode)
-            {
-                moveDir *= runningSpeed;
-            }
-            else if(!isAiming)
+            if(!playerAttacker.isAiming)
             {
                 moveDir *= walkingSpeed;
             }
@@ -113,7 +105,7 @@ public class PlayerLocomotion : MonoBehaviour
         Quaternion targetRotation = Quaternion.identity;
         Quaternion playerRotation = Quaternion.identity;
 
-        if (isAiming)
+        if (playerAttacker.isAiming)
         {
             targetDirection = cameraObject.forward;
             targetDirection.Normalize();
@@ -210,13 +202,5 @@ public class PlayerLocomotion : MonoBehaviour
         }
     }
 
-    private void HandleAiming()
-    {
-        animatorManager.animator.SetBool("IsAiming", isAiming);
-    }
-
-    private void HandleFiring()
-    {
-        animatorManager.animator.SetBool("IsFiring", isFiring);
-    }
+    
 }
