@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InputManager : MonoBehaviour
 {
@@ -24,11 +25,11 @@ public class InputManager : MonoBehaviour
     public float verticalInput;
     public float horizontalInput;
 
-    public bool input_LShift;
-    public bool input_Space;
+    public bool inputLShift;
+    public bool inputSpace;
 
-    public bool input_MouseRight;
-    public bool input_MouseLeft;
+    public bool inputMouseRight;
+    public bool inputMouseLeft;
 
     private void Awake()
     {
@@ -47,16 +48,16 @@ public class InputManager : MonoBehaviour
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
 
-            playerControls.PlayerActions.Sprint.performed += i => input_LShift = true;
-            playerControls.PlayerActions.Sprint.canceled += i => input_LShift = false;
+            playerControls.PlayerActions.Sprint.performed += i => inputLShift = true;
+            playerControls.PlayerActions.Sprint.canceled += i => inputLShift = false;
 
-            playerControls.PlayerActions.Aim.performed += i => input_MouseRight = true;
-            playerControls.PlayerActions.Aim.canceled += i => input_MouseRight = false;
+            playerControls.PlayerActions.Aim.performed += i => inputMouseRight = true;
+            playerControls.PlayerActions.Aim.canceled += i => inputMouseRight = false;
 
-            playerControls.PlayerActions.Jump.performed += i => input_Space = true;
+            playerControls.PlayerActions.Jump.performed += i => inputSpace = true;
 
-            playerControls.PlayerActions.Fire.performed += i => input_MouseLeft = true;
-            playerControls.PlayerActions.Fire.canceled += i => input_MouseLeft = false;
+            playerControls.PlayerActions.Fire.performed += i => inputMouseLeft = true;
+            playerControls.PlayerActions.Fire.canceled += i => inputMouseLeft = false;
         }
 
         playerControls.Enable();
@@ -94,10 +95,10 @@ public class InputManager : MonoBehaviour
 
     private void HandleSprintingInput()
     {
-        if (input_LShift)
+        if (inputLShift)
         {
             playerLocomotion.isSprinting = true;
-            if (input_MouseRight)
+            if (inputMouseRight)
             {
                 playerLocomotion.isSprinting = false;
             }
@@ -110,16 +111,16 @@ public class InputManager : MonoBehaviour
 
     private void HandleJumpingInput()
     {
-        if (input_Space)
+        if (inputSpace)
         {
-            input_Space = false;
+            inputSpace = false;
             playerLocomotion.HandleJumping();
         }
     }
 
     private void HandleAimingInput()
     {  
-        if (input_MouseRight && !playerLocomotion.isJumping)
+        if (inputMouseRight && !playerLocomotion.isJumping)
         {
             if (playerLocomotion.isSprinting)
             {
@@ -135,16 +136,17 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void HandleFireInput()
     {
-        if (input_MouseLeft)
+        if (inputMouseLeft)
         {
             playerAttacker.isFiring = true;
-            playerAttacker.HandleFire(playerInventory.weaponItem);
         }
         else
         {
             playerAttacker.isFiring = false;
         }
+        playerAttacker.HandleFire(playerInventory.weaponItem);
     }
 }

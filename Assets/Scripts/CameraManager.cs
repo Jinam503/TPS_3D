@@ -40,7 +40,7 @@ public class CameraManager : MonoBehaviour
     {
         FollowTarget();
         RotateCamera();
-        SetDefaultPositionByAiming(); //    Set MaxOffset lower While Aiming ( Á¶ÁØ½Ã Ä«¸Þ¶ó ¹ÐÂø )
+        SetDefaultPositionByAiming(); //    Set MaxOffset lower While Aiming ( ï¿½ï¿½ï¿½Ø½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ )
         HandleCameraCollisions();
     }
 
@@ -73,7 +73,7 @@ public class CameraManager : MonoBehaviour
 
     private void SetDefaultPositionByAiming()
     {
-        defaultPosition = playerAttacker.isAiming ? -1f : -2f; // Aimed -> -1, Not Aimed -> -2
+        defaultPosition = playerAttacker.isAiming ? -0.7f : -2f; // Aimed -> -0.7, Not Aimed -> -2
     }
 
     private void HandleCameraCollisions()

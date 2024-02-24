@@ -101,9 +101,9 @@ public class PlayerLocomotion : MonoBehaviour
         if (!isGrounded && !playerManager.isInteracting)
             return;
 
-        Vector3 targetDirection = Vector3.zero;
-        Quaternion targetRotation = Quaternion.identity;
-        Quaternion playerRotation = Quaternion.identity;
+        Vector3 targetDirection;
+        Quaternion targetRotation;
+        Quaternion playerRotation;
 
         if (playerAttacker.isAiming)
         {
@@ -153,7 +153,7 @@ public class PlayerLocomotion : MonoBehaviour
         }
 
         if (Physics.SphereCast(raycastOrigin, 0.2f, Vector3.down, out hit, 0.5f, groundLayer))
-            //¶¥¿¡ ´ê¾Ò´Â°¡
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ò´Â°ï¿½
         {
             if (!isGrounded && playerManager.isInteracting && !isDied)
             {
@@ -171,7 +171,7 @@ public class PlayerLocomotion : MonoBehaviour
         }
 
         if (isGrounded && !isJumping)
-        { // ¶¥¿¡ ´ê¾Ò´Âµ¥ Á¡ÇÁÁßÀÌ ¾Æ´Ï¸é  Áï½Ã À§Ä¡·Î ¼ø°£ÀÌµ¿
+        { // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ò´Âµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½  ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
             
             if (playerManager.isInteracting || inputManager.moveAmount > 0)
             {

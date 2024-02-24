@@ -54,5 +54,7 @@ public class WeaponHolderSlot : MonoBehaviour
             model.transform.localScale = Vector3.one;
         }
         currentWeaponModel = model;
+
+        weaponItem.muzzleSpawnPosition = model.transform.GetChild(0);
     }
 }

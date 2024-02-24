@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.InputSystem;
 
 public class PlayerAttacker : MonoBehaviour
 {
@@ -12,8 +13,7 @@ public class PlayerAttacker : MonoBehaviour
 
     [SerializeField] private Rig aimRig;
 
-    [SerializeField] private Transform bulletProjectilePrefab;
-    [SerializeField] private Transform spawnBulletPosition;
+    [SerializeField] private Transform ifNoRayCastHit;
 
     public bool isAiming;
     public bool isFiring;
@@ -48,15 +48,32 @@ public class PlayerAttacker : MonoBehaviour
             if (shootTimer <= 0f)
             {
                 shootTimer += shootTimerMax + Random.Range(0f, shootTimerMax * 0.25f);
-
-                if (isAiming && !playerLocomotion.isDied)
-                {
-                    animatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false); // Play Fire Animation
-
-                    Vector3 aimDir = (Mouse3D.GetMouseWorldPosition() - spawnBulletPosition.position).normalized;
-                    Instantiate(bulletProjectilePrefab, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+                
+                //  When Aiming and player Alive
+                if (isAiming && !playerLocomotion.isDied) 
+                {   //  Play Fire Animation
+                    animatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false);
+                    
+                    //  Spawn Muzzle Effect
+                    Vector3 muzzleSpawnPosition = weaponItem.muzzleSpawnPosition.position;
+                    
+                    Transform muzzleFlash = Instantiate(weaponItem.muzzleFlashPrefab, muzzleSpawnPosition, Quaternion.identity). transform;
+                    muzzleFlash.parent = weaponItem.muzzleSpawnPosition;
+                    
+                    //Check Hit
+                    
+                    RaycastHit hit;
+                    Vector3 direction = (Mouse3D.GetMouseWorldPosition() - muzzleSpawnPosition).normalized;
+                    if (Physics.Raycast(muzzleSpawnPosition, direction, out hit))
+                    {
+                        Debug.Log(hit.transform.name);
+                    }
                 }
             }
+        }
+        else
+        {
+            //weaponItem.muzzleFlash.Emit(0);
         }
     }
 

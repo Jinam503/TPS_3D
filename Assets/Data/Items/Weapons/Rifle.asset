@@ -16,5 +16,8 @@ MonoBehaviour:
   itemIcon: {fileID: 0}
   modelPrefab: {fileID: 6633297992522936585, guid: 60583cc91eb808240ac3a40f7557ce70, type: 3}
   isUnarmed: 0
+  bulletSpawnPosition: {fileID: 0}
+  bulletPrefab: {fileID: 410827819424123482, guid: 086cfdf31a595374b98d23caab5b22b1, type: 3}
+  muzzleFlashPrefab: {fileID: 6465474405900088282, guid: 7928f3996eb0512429dfb761c7289804, type: 3}
   Rifle_Fire: Fire
   Rifle_Reload: 
