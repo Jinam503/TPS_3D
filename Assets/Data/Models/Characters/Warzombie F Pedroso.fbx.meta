@@ -9,6 +9,21 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: WorldWar_zombie_material
     second: {fileID: 2100000, guid: 4fbb9a241b16d7043be83bbe86c8da75, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: world_war_zombie_diffuse
+    second: {fileID: 2800000, guid: da9b9b0a232f751448bbd154612e252d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: world_war_zombie_normal
+    second: {fileID: 2800000, guid: 52e7f44b0837a5a46845fe0ef1df760a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: world_war_zombie_specular
+    second: {fileID: 2800000, guid: 6395c94064d7f414a91a3f0c150c2cd1, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

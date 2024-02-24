@@ -3,10 +3,40 @@ guid: ec8652bbe2e570c488c258ee62aeba92
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yaku_zombie_material
+    second: {fileID: 2100000, guid: 3f8f1281e9029b5498dc02dfb4613613, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yifu
+    second: {fileID: 2100000, guid: d7ee535154a2d734482d093bade46216, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Yakuzombie_
+    second: {fileID: 2800000, guid: b6f9557d176b3c541920b1383abf086c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Yakuzombie_diffuse
+    second: {fileID: 2800000, guid: 95984b69d9853b144801e90540eb3e37, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Yakuzombie_normal
+    second: {fileID: 2800000, guid: 933e1cd718ca43b48850738c434ccb7c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Yakuzombie_specular
+    second: {fileID: 2800000, guid: d7b19ec8ebae0d940ab6524ce6dfd807, type: 3}
   materials:
     materialImportMode: 2
-    materialName: 1
+    materialName: 0
     materialSearch: 1
     materialLocation: 1
   animations:

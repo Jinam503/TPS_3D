@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class State : MonoBehaviour
 {
-    public virtual State Tick()
+    // ReSharper disable Unity.PerformanceAnalysis
+    public virtual State Tick(ZombieManager zombieManager)
     {
+        Debug.Log("running");
         return this;
     }
 }

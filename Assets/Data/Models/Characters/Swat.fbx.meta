@@ -14,6 +14,36 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Soldier_head6
     second: {fileID: 2100000, guid: d39afe9476550634d86cfba86f2fae48, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Soldier_Body_diffuse
+    second: {fileID: 2800000, guid: 5c2a841d63f0379449ac855ee0d43c29, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Soldier_Body_normal
+    second: {fileID: 2800000, guid: 4fdc2ae8822279e4187e97e7b34b44f0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Soldier_Body_specular
+    second: {fileID: 2800000, guid: 62091931ac4b51c46a2c735211babfb8, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Soldier_head_diffuse
+    second: {fileID: 2800000, guid: beb95c143c0cc1342945976bd69b8916, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Soldier_head_normal
+    second: {fileID: 2800000, guid: 7db3fca757a6468428e95d6b138f9623, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Soldier_head_specular
+    second: {fileID: 2800000, guid: 2424495be5faccb49af78d59ba77deb6, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
