@@ -21,6 +21,7 @@ public class PersueTargetState : State
     {
         zombieManager.zombieNavMeshAgent.enabled = true;
         zombieManager.zombieNavMeshAgent.SetDestination(zombieManager.currentTarget.transform.position);
+        Debug.Log("Has Path: " + zombieManager.zombieNavMeshAgent.hasPath);
         zombieManager.transform.rotation = Quaternion.Slerp(
             zombieManager.transform.rotation,
             zombieManager.zombieNavMeshAgent.transform.rotation, 

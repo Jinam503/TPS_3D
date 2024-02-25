@@ -34,6 +34,7 @@ public class ZombieManager : MonoBehaviour
         animator = GetComponent<Animator>();
         zombieNavMeshAgent = GetComponentInChildren<NavMeshAgent>();
         zombieRigidbody = GetComponent<Rigidbody>();
+         
     }
 
     private void FixedUpdate()
