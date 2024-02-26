@@ -65,7 +65,7 @@ public class PlayerLocomotion : MonoBehaviour
     private void HandleMovement()
     {
         if (isJumping)
-            return; 
+            return;
 
         moveDir = cameraObject.forward * inputManager.verticalInput;
         moveDir += cameraObject.right * inputManager.horizontalInput;

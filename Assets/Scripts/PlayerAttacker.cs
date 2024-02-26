@@ -12,6 +12,7 @@ public class PlayerAttacker : MonoBehaviour
     PlayerLocomotion playerLocomotion;
 
     [SerializeField] private Rig aimRig;
+    [SerializeField] private Rig leftHandRig;
 
     [SerializeField] private Transform ifNoRayCastHit;
 
@@ -19,6 +20,7 @@ public class PlayerAttacker : MonoBehaviour
     public bool isFiring;
 
     public float aimRigWeight;
+    public float rightHandRigWeight;
 
     private float shootTimer;
     private float shootTimerMax = 0.1f;
@@ -31,6 +33,7 @@ public class PlayerAttacker : MonoBehaviour
     private void Update()
     {
         aimRig.weight = Mathf.Lerp(aimRig.weight, aimRigWeight, Time.deltaTime * 20f);
+        leftHandRig.weight = Mathf.Lerp(leftHandRig.weight, rightHandRigWeight, Time.deltaTime * 20f);
     }
 
     private void FixedUpdate()

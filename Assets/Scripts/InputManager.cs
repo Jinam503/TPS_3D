@@ -95,8 +95,9 @@ public class InputManager : MonoBehaviour
 
     private void HandleSprintingInput()
     {
-        if (inputLShift)
+        if (inputLShift && moveAmount >0f)
         {
+            playerAttacker.rightHandRigWeight = 1f;
             playerLocomotion.isSprinting = true;
             if (inputMouseRight)
             {
@@ -105,6 +106,8 @@ public class InputManager : MonoBehaviour
         }
         else
         {
+
+            playerAttacker.rightHandRigWeight = 0f;
             playerLocomotion.isSprinting = false;
         }
     }
@@ -127,6 +130,7 @@ public class InputManager : MonoBehaviour
                 playerLocomotion.isSprinting = false;
             }
             playerAttacker.aimRigWeight = 1f;
+            playerAttacker.rightHandRigWeight = 1f;
             playerAttacker.isAiming = true;
         }
         else
