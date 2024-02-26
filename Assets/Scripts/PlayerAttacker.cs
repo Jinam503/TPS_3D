@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -24,6 +25,7 @@ public class PlayerAttacker : MonoBehaviour
 
     public bool isAiming;
     public bool isFiring;
+    public bool isReloading;
 
     public float aimRigWeight;
     public float rightHandRigWeight;
@@ -38,6 +40,14 @@ public class PlayerAttacker : MonoBehaviour
         playerInventory = GetComponent<PlayerInventory>();
         playerUIManager = GetComponent<PlayerUIManager>();
     }
+
+    private void Start()
+    {
+        playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo = 20;
+        playerUIManager.currentAmmoCountText.text = playerInventory.weaponSlotManager
+            .ReturnCurrentWeaponItemInHandSlot().remainingAmmo.ToString();
+    }
+
     private void Update()
     {
         aimRig.weight = Mathf.Lerp(aimRig.weight, aimRigWeight, Time.deltaTime * 20f);
@@ -53,80 +63,94 @@ public class PlayerAttacker : MonoBehaviour
 
     public void HandleFire(WeaponItem weaponItem)
     {
-        if (isFiring)
+        shootTimer -= Time.deltaTime;
+        if (shootTimer > 0f || !isFiring) return;
+        
+        if (playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo > 0)
         {
-            shootTimer -= Time.deltaTime;
-            if (shootTimer <= 0f)
-            {
-                if (playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo > 0)
-                {
-                    shootTimer += shootTimerMax;
+            shootTimer += shootTimerMax;
                     
-                    //  When Aiming and player Alive
-                    if (isAiming && !playerLocomotion.isDied) 
-                    {   
-                        //  Minus Bullet from magazine
-                        playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo--;
-                        playerUIManager.currentAmmoCountText.text = playerInventory.weaponSlotManager
-                            .ReturnCurrentWeaponItemInHandSlot().remainingAmmo.ToString();
+            //  When Aiming and player Alive
+            if (isAiming && !playerLocomotion.isDied) 
+            {   
+                //  Minus Bullet from magazine
+                playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo--;
+                playerUIManager.currentAmmoCountText.text = playerInventory.weaponSlotManager
+                    .ReturnCurrentWeaponItemInHandSlot().remainingAmmo.ToString();
                         
-                        //  Play Fire Animation
-                        animatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false);
+                //  Play Fire Animation
+                animatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false);
                         
-                        //  Spawn Muzzle Effect
-                        Vector3 muzzleSpawnPosition = weaponItem.muzzleSpawnPosition.position;
+                //  Spawn Muzzle Effect
+                Vector3 muzzleSpawnPosition = weaponItem.muzzleSpawnPosition.position;
                         
-                        Transform muzzleFlash = Instantiate(weaponItem.muzzleFlashPrefab, muzzleSpawnPosition, Quaternion.identity). transform;
-                        muzzleFlash.parent = weaponItem.muzzleSpawnPosition;
+                Transform muzzleFlash = Instantiate(weaponItem.muzzleFlashPrefab, muzzleSpawnPosition, Quaternion.identity). transform;
+                muzzleFlash.parent = weaponItem.muzzleSpawnPosition;
                         
-                        //Check Hit
+                //Check Hit
                         
-                        RaycastHit hit;
-                        Vector3 direction = (Mouse3D.GetMouseWorldPosition() - muzzleSpawnPosition).normalized;
-                        if (Physics.Raycast(muzzleSpawnPosition, direction, out hit, bulletRange, shootableLayers))
+                RaycastHit hit;
+                Vector3 direction = (Mouse3D.GetMouseWorldPosition() - muzzleSpawnPosition).normalized;
+                if (Physics.Raycast(muzzleSpawnPosition, direction, out hit, bulletRange, shootableLayers))
+                {
+                    Debug.DrawLine(muzzleSpawnPosition, hit.point, Color.red, 1);
+                    Debug.Log(hit.collider.gameObject.layer);
+                    ZombieEffectManager zombie =
+                        hit.collider.gameObject.GetComponentInParent<ZombieEffectManager>();
+                    if (zombie != null)
+                    {
+                        int damage = playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().damage;
+                        if (hit.collider.gameObject.layer == 8)
                         {
-                            Debug.DrawLine(muzzleSpawnPosition, hit.point, Color.red, 1);
-                            Debug.Log(hit.collider.gameObject.layer);
-                            ZombieEffectManager zombie =
-                                hit.collider.gameObject.GetComponentInParent<ZombieEffectManager>();
-                            if (zombie != null)
-                            {
-                                int damage = playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().damage;
-                                if (hit.collider.gameObject.layer == 8)
-                                {
-                                    zombie.DamageZombieHead(damage);
-                                }
-                                else if (hit.collider.gameObject.layer == 9)
-                                {
-                                    zombie.DamageZombieTorso(damage);
-                                }
-                                else if (hit.collider.gameObject.layer == 10)
-                                {
-                                    zombie.DamageZombieLeftArm(damage);
-                                }
-                                else if (hit.collider.gameObject.layer == 11)
-                                {
-                                    zombie.DamageZombieRightArm(damage);
-                                }
-                                else if (hit.collider.gameObject.layer == 12)
-                                {
-                                    zombie.DamageZombieLeftLeg(damage);
-                                }
-                                else if (hit.collider.gameObject.layer == 13)
-                                {
-                                    zombie.DamageZombieRighLeg(damage);   
-                                }
-                            }
+                            zombie.DamageZombieHead(damage);
+                        }
+                        else if (hit.collider.gameObject.layer == 9)
+                        {
+                            zombie.DamageZombieTorso(damage);
+                        }
+                        else if (hit.collider.gameObject.layer == 10)
+                        {
+                            zombie.DamageZombieLeftArm(damage);
+                        }
+                        else if (hit.collider.gameObject.layer == 11)
+                        {
+                            zombie.DamageZombieRightArm(damage);
+                        }
+                        else if (hit.collider.gameObject.layer == 12)
+                        {
+                            zombie.DamageZombieLeftLeg(damage);
+                        }
+                        else if (hit.collider.gameObject.layer == 13)
+                        {
+                            zombie.DamageZombieRighLeg(damage);   
                         }
                     }
                 }
-                else
-                {
-                    Debug.Log("CLICK (you are out of ammo");
-                }
-                
             }
         }
+        else
+        {
+            Debug.Log("CLICK (you are out of ammo");
+        }
+    }
+    
+    public void HandleReload()
+    {
+        isReloading = true;
+        rightHandRigWeight = 0f;
+        aimRigWeight = 0f;
+        
+        animatorManager.animator.SetBool("IsReloading", true);
+        animatorManager.PlayTargetAnimation("Rifle Reload", false);
+    }
+
+    public void EndReload()
+    {
+        isReloading = false;
+            
+        playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo = 20;
+        playerUIManager.currentAmmoCountText.text = playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot()
+            .remainingAmmo.ToString();
     }
 
     private void HandleAiming()

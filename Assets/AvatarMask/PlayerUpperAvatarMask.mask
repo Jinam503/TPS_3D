@@ -11,14 +11,16 @@ AvatarMask:
   m_Elements:
   - m_Path: 
     m_Weight: 1
-  - m_Path: Alpha_Joints
+  - m_Path: Geo
     m_Weight: 1
-  - m_Path: Alpha_Surface
+  - m_Path: Geo/Soldier_body
+    m_Weight: 1
+  - m_Path: Geo/Soldier_head
     m_Weight: 1
   - m_Path: mixamorig:Hips
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg/mixamorig:LeftLeg
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg/mixamorig:LeftLeg/mixamorig:LeftFoot
@@ -28,7 +30,7 @@ AvatarMask:
   - m_Path: mixamorig:Hips/mixamorig:LeftUpLeg/mixamorig:LeftLeg/mixamorig:LeftFoot/mixamorig:LeftToeBase/mixamorig:LeftToe_End
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:RightUpLeg
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:RightUpLeg/mixamorig:RightLeg
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:RightUpLeg/mixamorig:RightLeg/mixamorig:RightFoot
@@ -93,9 +95,17 @@ AvatarMask:
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck
     m_Weight: 1
-  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Head
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Neck1
     m_Weight: 1
-  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Head/mixamorig:HeadTop_End
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Neck1/mixamorig:Head
+    m_Weight: 1
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Neck1/mixamorig:Head/mixamorig:HeadTop_End
+    m_Weight: 1
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Neck1/mixamorig:Head/mixamorig:Jaw
+    m_Weight: 1
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Neck1/mixamorig:Head/mixamorig:LeftEye
+    m_Weight: 1
+  - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:Neck/mixamorig:Neck1/mixamorig:Head/mixamorig:RightEye
     m_Weight: 1
   - m_Path: mixamorig:Hips/mixamorig:Spine/mixamorig:Spine1/mixamorig:Spine2/mixamorig:RightShoulder
     m_Weight: 1

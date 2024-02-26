@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 
 public class InputManager : MonoBehaviour
 {
+    private PlayerManager playerManager;
     PlayerControls playerControls;
     PlayerLocomotion playerLocomotion;
     AnimatorManager animatorManager;
@@ -31,12 +32,15 @@ public class InputManager : MonoBehaviour
     public bool inputMouseRight;
     public bool inputMouseLeft;
 
+    public bool inputReload;
+
     private void Awake()
     {
         playerInventory = GetComponent<PlayerInventory>();
         playerAttacker = GetComponent<PlayerAttacker>();
         animatorManager = GetComponentInChildren<AnimatorManager>();
         playerLocomotion = GetComponent<PlayerLocomotion>();
+        playerManager = GetComponent<PlayerManager>();
     }
 
     private void OnEnable()
@@ -58,6 +62,8 @@ public class InputManager : MonoBehaviour
 
             playerControls.PlayerActions.Fire.performed += i => inputMouseLeft = true;
             playerControls.PlayerActions.Fire.canceled += i => inputMouseLeft = false;
+
+            playerControls.PlayerActions.Reload.performed += i => inputReload = true;
         }
 
         playerControls.Enable();
@@ -75,6 +81,7 @@ public class InputManager : MonoBehaviour
         HandleJumpingInput();
         HandleAimingInput();
         HandleFireInput();
+        HandleReloadInput();
     }
 
     private void HandleMovementInput()
@@ -97,7 +104,10 @@ public class InputManager : MonoBehaviour
     {
         if (inputLShift && moveAmount >0f)
         {
-            playerAttacker.rightHandRigWeight = 1f;
+            if (!playerAttacker.isReloading)
+            {
+                playerAttacker.rightHandRigWeight = 1f;
+            }
             playerLocomotion.isSprinting = true;
             if (inputMouseRight)
             {
@@ -106,7 +116,6 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-
             playerAttacker.rightHandRigWeight = 0f;
             playerLocomotion.isSprinting = false;
         }
@@ -129,8 +138,12 @@ public class InputManager : MonoBehaviour
             {
                 playerLocomotion.isSprinting = false;
             }
-            playerAttacker.aimRigWeight = 1f;
-            playerAttacker.rightHandRigWeight = 1f;
+
+            if (!playerAttacker.isReloading)
+            {
+                playerAttacker.aimRigWeight = 1f;
+                playerAttacker.rightHandRigWeight = 1f;
+            }
             playerAttacker.isAiming = true;
         }
         else
@@ -143,7 +156,7 @@ public class InputManager : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private void HandleFireInput()
     {
-        if (inputMouseLeft)
+        if (inputMouseLeft && !playerAttacker.isReloading)
         {
             playerAttacker.isFiring = true;
         }
@@ -152,5 +165,18 @@ public class InputManager : MonoBehaviour
             playerAttacker.isFiring = false;
         }
         playerAttacker.HandleFire(playerInventory.weaponItem);
+    }
+
+    private void HandleReloadInput()
+    {
+        if (inputReload &&
+            !playerAttacker.isReloading &&
+            !playerAttacker.isFiring &&
+            playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo != 20 &&
+            !playerLocomotion.isDied)
+        {
+            inputReload = false;
+            playerAttacker.HandleReload();
+        }
     }
 }

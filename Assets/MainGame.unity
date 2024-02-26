@@ -13360,7 +13360,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13675,6 +13675,7 @@ MonoBehaviour:
   inputSpace: 0
   inputMouseRight: 0
   inputMouseLeft: 0
+  inputReload: 0
 --- !u!114 &981377119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13767,6 +13768,7 @@ MonoBehaviour:
     m_Bits: 16129
   isAiming: 0
   isFiring: 0
+  isReloading: 0
   aimRigWeight: 0
   rightHandRigWeight: 0
 --- !u!114 &981377124
@@ -14198,7 +14200,7 @@ MonoBehaviour:
       m_Length: 1
       m_Item0:
         transform: {fileID: 671139963}
-        weight: 0.49
+        weight: 0.68
       m_Item1:
         transform: {fileID: 0}
         weight: 0
