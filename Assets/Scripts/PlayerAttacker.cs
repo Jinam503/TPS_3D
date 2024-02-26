@@ -11,6 +11,7 @@ public class PlayerAttacker : MonoBehaviour
     private AnimatorManager animatorManager;
     private PlayerLocomotion playerLocomotion;
     private PlayerInventory playerInventory;
+    private PlayerUIManager playerUIManager;
 
     [SerializeField] private Rig aimRig;
     [SerializeField] private Rig leftHandRig;
@@ -28,13 +29,14 @@ public class PlayerAttacker : MonoBehaviour
     public float rightHandRigWeight;
 
     private float shootTimer;
-    private float shootTimerMax = 0.1f;
+    private float shootTimerMax = 0.7f;
 
     private void Awake()
     {
         animatorManager = GetComponentInChildren<AnimatorManager>();
         playerLocomotion = GetComponent<PlayerLocomotion>();
         playerInventory = GetComponent<PlayerInventory>();
+        playerUIManager = GetComponent<PlayerUIManager>();
     }
     private void Update()
     {
@@ -56,59 +58,73 @@ public class PlayerAttacker : MonoBehaviour
             shootTimer -= Time.deltaTime;
             if (shootTimer <= 0f)
             {
-                shootTimer += shootTimerMax + Random.Range(0f, shootTimerMax * 0.25f);
-                
-                //  When Aiming and player Alive
-                if (isAiming && !playerLocomotion.isDied) 
-                {   //  Play Fire Animation
-                    animatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false);
+                if (playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo > 0)
+                {
+                    shootTimer += shootTimerMax;
                     
-                    //  Spawn Muzzle Effect
-                    Vector3 muzzleSpawnPosition = weaponItem.muzzleSpawnPosition.position;
-                    
-                    Transform muzzleFlash = Instantiate(weaponItem.muzzleFlashPrefab, muzzleSpawnPosition, Quaternion.identity). transform;
-                    muzzleFlash.parent = weaponItem.muzzleSpawnPosition;
-                    
-                    //Check Hit
-                    
-                    RaycastHit hit;
-                    Vector3 direction = (Mouse3D.GetMouseWorldPosition() - muzzleSpawnPosition).normalized;
-                    if (Physics.Raycast(muzzleSpawnPosition, direction, out hit, bulletRange, shootableLayers))
-                    {
-                        Debug.DrawLine(muzzleSpawnPosition, hit.point, Color.red, 1);
-                        Debug.Log(hit.collider.gameObject.layer);
-                        ZombieEffectManager zombie =
-                            hit.collider.gameObject.GetComponentInParent<ZombieEffectManager>();
-                        if (zombie != null)
+                    //  When Aiming and player Alive
+                    if (isAiming && !playerLocomotion.isDied) 
+                    {   
+                        //  Minus Bullet from magazine
+                        playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo--;
+                        playerUIManager.currentAmmoCountText.text = playerInventory.weaponSlotManager
+                            .ReturnCurrentWeaponItemInHandSlot().remainingAmmo.ToString();
+                        
+                        //  Play Fire Animation
+                        animatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false);
+                        
+                        //  Spawn Muzzle Effect
+                        Vector3 muzzleSpawnPosition = weaponItem.muzzleSpawnPosition.position;
+                        
+                        Transform muzzleFlash = Instantiate(weaponItem.muzzleFlashPrefab, muzzleSpawnPosition, Quaternion.identity). transform;
+                        muzzleFlash.parent = weaponItem.muzzleSpawnPosition;
+                        
+                        //Check Hit
+                        
+                        RaycastHit hit;
+                        Vector3 direction = (Mouse3D.GetMouseWorldPosition() - muzzleSpawnPosition).normalized;
+                        if (Physics.Raycast(muzzleSpawnPosition, direction, out hit, bulletRange, shootableLayers))
                         {
-                            int damage = playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().damage;
-                            if (hit.collider.gameObject.layer == 8)
+                            Debug.DrawLine(muzzleSpawnPosition, hit.point, Color.red, 1);
+                            Debug.Log(hit.collider.gameObject.layer);
+                            ZombieEffectManager zombie =
+                                hit.collider.gameObject.GetComponentInParent<ZombieEffectManager>();
+                            if (zombie != null)
                             {
-                                zombie.DamageZombieHead(damage);
-                            }
-                            else if (hit.collider.gameObject.layer == 9)
-                            {
-                                zombie.DamageZombieTorso(damage);
-                            }
-                            else if (hit.collider.gameObject.layer == 10)
-                            {
-                                zombie.DamageZombieLeftArm(damage);
-                            }
-                            else if (hit.collider.gameObject.layer == 11)
-                            {
-                                zombie.DamageZombieRightArm(damage);
-                            }
-                            else if (hit.collider.gameObject.layer == 12)
-                            {
-                                zombie.DamageZombieLeftLeg(damage);
-                            }
-                            else if (hit.collider.gameObject.layer == 13)
-                            {
-                                zombie.DamageZombieRighLeg(damage);   
+                                int damage = playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().damage;
+                                if (hit.collider.gameObject.layer == 8)
+                                {
+                                    zombie.DamageZombieHead(damage);
+                                }
+                                else if (hit.collider.gameObject.layer == 9)
+                                {
+                                    zombie.DamageZombieTorso(damage);
+                                }
+                                else if (hit.collider.gameObject.layer == 10)
+                                {
+                                    zombie.DamageZombieLeftArm(damage);
+                                }
+                                else if (hit.collider.gameObject.layer == 11)
+                                {
+                                    zombie.DamageZombieRightArm(damage);
+                                }
+                                else if (hit.collider.gameObject.layer == 12)
+                                {
+                                    zombie.DamageZombieLeftLeg(damage);
+                                }
+                                else if (hit.collider.gameObject.layer == 13)
+                                {
+                                    zombie.DamageZombieRighLeg(damage);   
+                                }
                             }
                         }
                     }
                 }
+                else
+                {
+                    Debug.Log("CLICK (you are out of ammo");
+                }
+                
             }
         }
     }
