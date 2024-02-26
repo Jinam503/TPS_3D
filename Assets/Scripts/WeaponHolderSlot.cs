@@ -5,10 +5,8 @@ using UnityEngine;
 public class WeaponHolderSlot : MonoBehaviour
 {
     public Transform parentOverride;
+    public WeaponItem currentWeapon;
     public GameObject currentWeaponModel;
-
-    public PlayerLocomotion playerLocomotion;
-    public InputManager inputManager;
 
     public void UnloadWeapon()
     {
@@ -16,6 +14,8 @@ public class WeaponHolderSlot : MonoBehaviour
         {
             currentWeaponModel.SetActive(false);     
         }
+
+        currentWeapon = null;
     }
 
     public void UnloadWeaponAndDestroy()
@@ -24,6 +24,8 @@ public class WeaponHolderSlot : MonoBehaviour
         {
             Destroy(currentWeaponModel);
         }
+
+        currentWeapon = null;
     }
 
     public void LoadWeaponModel(WeaponItem weaponItem)
@@ -54,6 +56,7 @@ public class WeaponHolderSlot : MonoBehaviour
             model.transform.localScale = Vector3.one;
         }
         currentWeaponModel = model;
+        currentWeapon = weaponItem;
 
         weaponItem.muzzleSpawnPosition = model.transform.GetChild(0);
     }

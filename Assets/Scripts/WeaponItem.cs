@@ -14,4 +14,7 @@ public class WeaponItem : Item
     [Header("Rifle Firing animation")]
     public string Rifle_Fire;
     public string Rifle_Reload;
+
+    [Header("Weapon Damage")]
+    public int damage = 20;
 }

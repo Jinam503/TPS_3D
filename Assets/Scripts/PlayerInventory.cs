@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    WeaponSlotManager weaponSlotManager;
+    public WeaponSlotManager weaponSlotManager;
 
     public WeaponItem weaponItem;
 

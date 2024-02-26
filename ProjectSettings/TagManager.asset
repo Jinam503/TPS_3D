@@ -13,12 +13,12 @@ TagManager:
   - UI
   - Player
   - Zombie
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Damagable Head
+  - Damagable Torso
+  - Damagable LeftArm
+  - Damagable RightArm
+  - Damagable LeftLeg
+  - Damagable RightLeg
   - 
   - 
   - 

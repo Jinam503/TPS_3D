@@ -46,8 +46,6 @@ public class IdleState : State
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, detectionLayer);
         
-        Debug.Log("Checking for Colliders");
-
         for (int i = 0; i < colliders.Length; i++)
         {
             PlayerManager player = colliders[i].transform.GetComponent<PlayerManager>();
@@ -55,13 +53,11 @@ public class IdleState : State
             //  if the playerManager is detected, we then check for line of sight
             if (player != null)
             {
-                Debug.Log("found the player collider");
                 Vector3 targetDirection = transform.position - player.transform.position;
                 float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
 
                 if (viewableAngle > minimumDetectionRadiusAngle && viewableAngle < maximumDetectionRadiusAngle)
                 {
-                    Debug.Log("We have passed the field of view check");
                     RaycastHit hit;
                     Vector3 playerStartPoint = new Vector3(player.transform.position.x,characterEyeLevel, player.transform.position.z );
                     Vector3 zombieStartPoint = new Vector3(transform.position.x,characterEyeLevel, transform.position.z );
@@ -70,11 +66,10 @@ public class IdleState : State
                     //  Check one last time for object blocking view
                     if (Physics.Linecast(playerStartPoint, zombieStartPoint, out hit,ignoreForLineOfSightDetection))
                     {
-                        Debug.Log("There is something in the way");
+                        //There is something in the way
                     }
                     else
                     {
-                        Debug.Log("We have a target, switching states");
                         zombieManager.currentTarget = player;
                     }
                 }

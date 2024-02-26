@@ -14,4 +14,16 @@ public class WeaponSlotManager : MonoBehaviour
     {
         handSlot.LoadWeaponModel(weaponItem);   
     }
+
+    public WeaponItem ReturnCurrentWeaponItemInHandSlot()
+    {
+        if (handSlot.currentWeapon)
+        {
+            return handSlot.currentWeapon;
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
