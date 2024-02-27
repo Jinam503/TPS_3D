@@ -4,26 +4,24 @@ using UnityEngine;
 
 public class PlayerLocomotion : MonoBehaviour
 {
-    PlayerManager playerManager;
-    AnimatorManager animatorManager;
-    InputManager inputManager;
-    PlayerAttacker playerAttacker;
-
-    Vector3 moveDir;
+    private PlayerManager playerManager;
+    private InputManager inputManager;
+    
+    private Vector3 moveDir;
     public Transform cameraObject;
 
     Rigidbody playerRigidbody;
 
-    [Header("Falling")]
-    public float leapingVelocity;
-    public float fallingVelocity;
-    public float raycastHeightOffset = 0.5f;
-    public LayerMask groundLayer;
+    //[Header("Falling")]
+    //public float leapingVelocity;
+    //public float fallingVelocity;
+    //public float raycastHeightOffset = 0.5f;
+    //public LayerMask groundLayer;
 
     [Header("Movement Flags")]
     public bool isSprinting;
     public bool isGrounded;
-    public bool isJumping;
+    //public bool isJumping;
     public bool isDied;
 
     [Header("Movement Speeds")]
@@ -32,17 +30,15 @@ public class PlayerLocomotion : MonoBehaviour
     public float rotationSpeed;
     public float aimingSpeed;
 
-    [Header("Jump Stats")]
-    public float jumpHeight = 1;
-    public float gravityIntensity = 10;
+    //[Header("Jump Stats")]
+    //public float jumpHeight = 1;
+    //public float gravityIntensity = 10;
 
     private void Awake()
     {
-        inputManager = GetComponent<InputManager>();
         playerRigidbody = GetComponent<Rigidbody>();
         playerManager = GetComponent<PlayerManager>();
-        animatorManager = GetComponentInChildren<AnimatorManager>();
-        playerAttacker = GetComponent<PlayerAttacker>();
+        inputManager = GetComponentInChildren<InputManager>();
     }
     
     public void HandleAllMovement(bool isInteracting)
@@ -51,7 +47,7 @@ public class PlayerLocomotion : MonoBehaviour
         {
             playerRigidbody.velocity = Vector3.zero;
         }
-        HandleFallingAndLanding();
+        //HandleFallingAndLanding();
 
         if (isInteracting)
         {
@@ -64,8 +60,8 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (isJumping)
-            return;
+        //if (isJumping)
+        //    return;
 
         moveDir = cameraObject.forward * inputManager.verticalInput;
         moveDir += cameraObject.right * inputManager.horizontalInput;
@@ -78,7 +74,7 @@ public class PlayerLocomotion : MonoBehaviour
         }
         else
         {
-            if(!playerAttacker.isAiming)
+            if(!playerManager.playerAttacker.isAiming)
             {
                 moveDir *= walkingSpeed;
             }
@@ -105,7 +101,7 @@ public class PlayerLocomotion : MonoBehaviour
         Quaternion targetRotation;
         Quaternion playerRotation;
 
-        if (playerAttacker.isAiming)
+        if (playerManager.playerAttacker.isAiming)
         {
             targetDirection = cameraObject.forward;
             targetDirection.Normalize();
@@ -134,7 +130,7 @@ public class PlayerLocomotion : MonoBehaviour
         transform.rotation = playerRotation;
     }
 
-    private void HandleFallingAndLanding()
+    /*private void HandleFallingAndLanding()
     {
         RaycastHit hit;
         Vector3 raycastOrigin = transform.position;
@@ -182,9 +178,9 @@ public class PlayerLocomotion : MonoBehaviour
                 transform.position = targetPosition;
             }
         }
-    }
+    }*/
 
-    public void HandleJumping()
+    /*public void HandleJumping()
     {
         if (isDied) return;
 
@@ -200,7 +196,7 @@ public class PlayerLocomotion : MonoBehaviour
             playerRigidbody.velocity = playerVelocity;
             
         }
-    }
+    }*/
 
     
 }

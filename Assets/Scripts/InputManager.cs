@@ -7,10 +7,6 @@ public class InputManager : MonoBehaviour
 {
     private PlayerManager playerManager;
     PlayerControls playerControls;
-    PlayerLocomotion playerLocomotion;
-    AnimatorManager animatorManager;
-    PlayerAttacker playerAttacker;
-    PlayerInventory playerInventory;
 
     [SerializeField]
     private  Vector2 movementInput;
@@ -36,10 +32,6 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        playerInventory = GetComponent<PlayerInventory>();
-        playerAttacker = GetComponent<PlayerAttacker>();
-        animatorManager = GetComponentInChildren<AnimatorManager>();
-        playerLocomotion = GetComponent<PlayerLocomotion>();
         playerManager = GetComponent<PlayerManager>();
     }
 
@@ -78,7 +70,6 @@ public class InputManager : MonoBehaviour
     {
         HandleMovementInput();
         HandleSprintingInput();
-        HandleJumpingInput();
         HandleAimingInput();
         HandleFireInput();
         HandleReloadInput();
@@ -93,10 +84,10 @@ public class InputManager : MonoBehaviour
         cameraInputX = cameraInput.x;
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
-        animatorManager.UpdateAnimatorValues(
-            playerAttacker.isAiming == false ? 0: horizontalInput,
-            playerAttacker.isAiming == false ? moveAmount : verticalInput,
-            playerLocomotion.isSprinting
+        playerManager.animatorManager.UpdateAnimatorValues(
+            playerManager.playerAttacker.isAiming == false ? 0: horizontalInput,
+            playerManager.playerAttacker.isAiming == false ? moveAmount : verticalInput,
+            playerManager.playerLocomotion.isSprinting
         );
     }
 
@@ -104,79 +95,75 @@ public class InputManager : MonoBehaviour
     {
         if (inputLShift && moveAmount >0f)
         {
-            if (!playerAttacker.isReloading)
+            if (!playerManager.playerAttacker.isReloading)
             {
-                playerAttacker.rightHandRigWeight = 1f;
+                playerManager.playerAttacker.rightHandRigWeight = 1f;
             }
-            playerLocomotion.isSprinting = true;
+            playerManager.playerLocomotion.isSprinting = true;
             if (inputMouseRight)
             {
-                playerLocomotion.isSprinting = false;
+                playerManager.playerLocomotion.isSprinting = false;
             }
         }
         else
         {
-            playerAttacker.rightHandRigWeight = 0f;
-            playerLocomotion.isSprinting = false;
+            playerManager.playerAttacker.rightHandRigWeight = 0f;
+            playerManager.playerLocomotion.isSprinting = false;
         }
     }
 
-    private void HandleJumpingInput()
+    /*private void HandleJumpingInput()
     {
         if (inputSpace)
         {
             inputSpace = false;
-            playerLocomotion.HandleJumping();
+            playerManager.playerLocomotion.HandleJumping();
         }
-    }
+    }*/
 
     private void HandleAimingInput()
     {  
-        if (inputMouseRight && !playerLocomotion.isJumping)
+        if (inputMouseRight)
         {
-            if (playerLocomotion.isSprinting)
+            if (playerManager.playerLocomotion.isSprinting)
             {
-                playerLocomotion.isSprinting = false;
+                playerManager.playerLocomotion.isSprinting = false;
             }
 
-            if (!playerAttacker.isReloading)
+            if (!playerManager.playerAttacker.isReloading)
             {
-                playerAttacker.aimRigWeight = 1f;
-                playerAttacker.rightHandRigWeight = 1f;
+                playerManager.playerAttacker.aimRigWeight = 1f;
+                playerManager.playerAttacker.rightHandRigWeight = 1f;
             }
-            playerAttacker.isAiming = true;
+            playerManager.playerAttacker.isAiming = true;
         }
         else
         {
-            playerAttacker.aimRigWeight = 0f;
-            playerAttacker.isAiming = false;
+            playerManager.playerAttacker.aimRigWeight = 0f;
+            playerManager.playerAttacker.isAiming = false;
         }
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
     private void HandleFireInput()
     {
-        if (inputMouseLeft && !playerAttacker.isReloading)
+        if (inputMouseLeft && !playerManager.playerAttacker.isFiring)
         {
-            playerAttacker.isFiring = true;
+            inputMouseLeft = false;
+            playerManager.playerAttacker.isFiring = true;
         }
-        else
-        {
-            playerAttacker.isFiring = false;
-        }
-        playerAttacker.HandleFire(playerInventory.weaponItem);
+        playerManager.playerAttacker.HandleFire(playerManager.playerEquipment.weaponItem);
     }
 
     private void HandleReloadInput()
     {
         if (inputReload &&
-            !playerAttacker.isReloading &&
-            !playerAttacker.isFiring &&
-            playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo != 20 &&
-            !playerLocomotion.isDied)
+            !playerManager.playerAttacker.isReloading &&
+            !playerManager.playerAttacker.isFiring &&
+            !playerManager.playerLocomotion.isDied)
         {
             inputReload = false;
-            playerAttacker.HandleReload();
+            playerManager.playerAttacker.HandleReload();
         }
     }
 }

@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    private PlayerManager playerManager;
     public int healthLevel = 10;
     public int maxHealth;
     public int currentHealth;
 
     public HealthBar healthBar;
 
-    AnimatorManager animatorManager;
-    PlayerLocomotion playerLocomotion;
-
     private void Awake()
     {
-        playerLocomotion = GetComponent<PlayerLocomotion>();
-        animatorManager = GetComponentInChildren<AnimatorManager>();
+        playerManager = GetComponent<PlayerManager>();
     }
 
     void Start()
@@ -40,13 +37,13 @@ public class PlayerStats : MonoBehaviour
 
         healthBar.SetCurrentHealth(currentHealth);
 
-        animatorManager.PlayTargetAnimation("Hit Reaction", false);
+        playerManager.animatorManager.PlayTargetAnimation("Hit Reaction", false);
 
         if(currentHealth <= 0)
         {
             currentHealth = 0;
-            animatorManager.PlayTargetAnimation("Death From The Front", true);
-            playerLocomotion.isDied = true;
+            playerManager.animatorManager.PlayTargetAnimation("Death From The Front", true);
+            playerManager.playerLocomotion.isDied = true;
         }
     }
 }

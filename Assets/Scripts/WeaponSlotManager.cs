@@ -5,17 +5,26 @@ using UnityEngine;
 public class WeaponSlotManager : MonoBehaviour
 {
     private WeaponHolderSlot handSlot;
-    private PlayerUIManager playerUIManager;
+    private PlayerManager playerManager;
 
     private void Awake()
     {
         handSlot = GetComponentInChildren<WeaponHolderSlot>();
-        playerUIManager = GetComponentInParent<PlayerUIManager>();
+        playerManager = GetComponentInParent<PlayerManager>();
     }
     public void LoadWeaponOnSlot(WeaponItem weaponItem)
     {
         handSlot.LoadWeaponModel(weaponItem);
-        playerUIManager.currentAmmoCountText.text = weaponItem.remainingAmmo.ToString();
+        playerManager.playerUIManager.currentAmmoCountText.text = weaponItem.remainingAmmo.ToString();
+
+        if (playerManager.playerInventory.currentAmmoInInventory != null)
+        {
+            if (playerManager.playerInventory.currentAmmoInInventory.ammoType == weaponItem.ammotype)
+            {
+                playerManager.playerUIManager.reservedAmmoCountText.text =
+                    playerManager.playerInventory.currentAmmoInInventory.ammoRemaining.ToString();
+            }
+        }
     }
 
     public WeaponItem ReturnCurrentWeaponItemInHandSlot()

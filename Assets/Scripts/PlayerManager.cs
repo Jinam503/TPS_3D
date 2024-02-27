@@ -7,9 +7,14 @@ public class PlayerManager : MonoBehaviour
 {
     Animator animator;
     InputManager inputManager;
-    PlayerLocomotion playerLocomotion;
-
-    CameraManager cameraManager;
+    
+    public PlayerLocomotion playerLocomotion;
+    public CameraManager cameraManager;
+    public AnimatorManager animatorManager;
+    public PlayerInventory playerInventory;
+    public PlayerEquipment playerEquipment;
+    public PlayerUIManager playerUIManager;
+    public PlayerAttacker playerAttacker;
 
     public bool isInteracting;
 
@@ -22,6 +27,11 @@ public class PlayerManager : MonoBehaviour
         inputManager = GetComponent<InputManager>();
         playerLocomotion = GetComponent<PlayerLocomotion>();
         cameraManager = FindObjectOfType<CameraManager>();
+        animatorManager = GetComponentInChildren<AnimatorManager>();;
+        playerEquipment = GetComponent<PlayerEquipment>();
+        playerUIManager = GetComponent<PlayerUIManager>();
+        playerInventory = GetComponent<PlayerInventory>();
+        playerAttacker = GetComponent<PlayerAttacker>();
     }
 
     private void Update()
@@ -42,7 +52,7 @@ public class PlayerManager : MonoBehaviour
         cameraManager.HandleAllCameraMovement();
 
         isInteracting = animator.GetBool("IsInteracting");
-        playerLocomotion.isJumping = animator.GetBool("IsJumping");
+        //playerLocomotion.isJumping = animator.GetBool("IsJumping");
         animator.SetBool("IsGrounded", playerLocomotion.isGrounded);
     }
 }

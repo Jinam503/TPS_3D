@@ -9,10 +9,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttacker : MonoBehaviour
 {
-    private AnimatorManager animatorManager;
-    private PlayerLocomotion playerLocomotion;
-    private PlayerInventory playerInventory;
-    private PlayerUIManager playerUIManager;
+    private PlayerManager playerManager;
 
     [SerializeField] private Rig aimRig;
     [SerializeField] private Rig leftHandRig;
@@ -31,20 +28,17 @@ public class PlayerAttacker : MonoBehaviour
     public float rightHandRigWeight;
 
     private float shootTimer;
-    private float shootTimerMax = 0.7f;
+    private float shootTimerMax = 0.2f;
 
     private void Awake()
     {
-        animatorManager = GetComponentInChildren<AnimatorManager>();
-        playerLocomotion = GetComponent<PlayerLocomotion>();
-        playerInventory = GetComponent<PlayerInventory>();
-        playerUIManager = GetComponent<PlayerUIManager>();
+        playerManager = GetComponentInChildren<PlayerManager>();
     }
 
     private void Start()
     {
-        playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo = 20;
-        playerUIManager.currentAmmoCountText.text = playerInventory.weaponSlotManager
+        playerManager.playerEquipment.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo = 20;
+        playerManager.playerUIManager.currentAmmoCountText.text = playerManager.playerEquipment.weaponSlotManager
             .ReturnCurrentWeaponItemInHandSlot().remainingAmmo.ToString();
     }
 
@@ -66,20 +60,20 @@ public class PlayerAttacker : MonoBehaviour
         shootTimer -= Time.deltaTime;
         if (shootTimer > 0f || !isFiring) return;
         
-        if (playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo > 0)
+        if (playerManager.playerEquipment.CurrentWeapon.remainingAmmo > 0)
         {
-            shootTimer += shootTimerMax;
+            isFiring = false;
+            shootTimer = shootTimerMax;
                     
             //  When Aiming and player Alive
-            if (isAiming && !playerLocomotion.isDied) 
+            if (isAiming && !playerManager.playerLocomotion.isDied) 
             {   
                 //  Minus Bullet from magazine
-                playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo--;
-                playerUIManager.currentAmmoCountText.text = playerInventory.weaponSlotManager
-                    .ReturnCurrentWeaponItemInHandSlot().remainingAmmo.ToString();
+                playerManager.playerEquipment.CurrentWeapon.remainingAmmo--;
+                playerManager.playerUIManager.currentAmmoCountText.text = playerManager.playerEquipment.CurrentWeapon.remainingAmmo.ToString();
                         
                 //  Play Fire Animation
-                animatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false);
+                playerManager.animatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false);
                         
                 //  Spawn Muzzle Effect
                 Vector3 muzzleSpawnPosition = weaponItem.muzzleSpawnPosition.position;
@@ -99,7 +93,7 @@ public class PlayerAttacker : MonoBehaviour
                         hit.collider.gameObject.GetComponentInParent<ZombieEffectManager>();
                     if (zombie != null)
                     {
-                        int damage = playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().damage;
+                        int damage = playerManager.playerEquipment.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().damage;
                         if (hit.collider.gameObject.layer == 8)
                         {
                             zombie.DamageZombieHead(damage);
@@ -136,30 +130,65 @@ public class PlayerAttacker : MonoBehaviour
     
     public void HandleReload()
     {
-        isReloading = true;
-        rightHandRigWeight = 0f;
-        aimRigWeight = 0f;
+        WeaponItem currentWeapon = playerManager.playerEquipment.CurrentWeapon;
+        BoxOfAmmoItem boxOfAmmoItem = playerManager.playerInventory.currentAmmoInInventory;
+
+        if (currentWeapon.remainingAmmo == currentWeapon.maxAmmo)
+        {
+            Debug.Log("Ammo Already Full");
+            return;
+        }
         
-        animatorManager.animator.SetBool("IsReloading", true);
-        animatorManager.PlayTargetAnimation("Rifle Reload", false);
+        //  Check to see if it has ammo in inventory for this particular weapon, if we do not, return
+        if (boxOfAmmoItem){
+            if (boxOfAmmoItem.ammoType == currentWeapon.ammotype && boxOfAmmoItem.ammoRemaining > 0)
+            {
+                isReloading = true;
+                rightHandRigWeight = 0f;
+                aimRigWeight = 0f;
+        
+                playerManager.animatorManager.animator.SetBool("IsReloading", true);
+                playerManager.animatorManager.PlayTargetAnimation("Rifle Reload", false);
+            }
+        }
+    
     }
 
     public void EndReload()
     {
+        //  Change Ammo States
         isReloading = false;
-            
-        playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo = 20;
-        playerUIManager.currentAmmoCountText.text = playerInventory.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot()
-            .remainingAmmo.ToString();
+        WeaponItem currentWeapon = playerManager.playerEquipment.CurrentWeapon;
+        BoxOfAmmoItem boxOfAmmoItem = playerManager.playerInventory.currentAmmoInInventory;
+        
+        int amountOfAmmoToReload =
+            playerManager.playerEquipment.CurrentWeapon.maxAmmo -
+            playerManager.playerEquipment.CurrentWeapon.remainingAmmo;
+
+        //  If it has MORE ammo remaining than we need to put in our weapon, we subtract from TOTAL
+        if (boxOfAmmoItem.ammoRemaining >= amountOfAmmoToReload)
+        {
+            currentWeapon.remainingAmmo = currentWeapon.maxAmmo;
+            boxOfAmmoItem.ammoRemaining -= amountOfAmmoToReload;
+        }
+        //  If it has LESS ammo remaining than we need to put in our weapon, we just set to 0 and put in to our weapon
+        else
+        {
+            currentWeapon.remainingAmmo += boxOfAmmoItem.ammoRemaining;
+            boxOfAmmoItem.ammoRemaining = 0;
+        }
+                
+        playerManager.playerUIManager.reservedAmmoCountText.text = boxOfAmmoItem.ammoRemaining.ToString();
+        playerManager.playerUIManager.currentAmmoCountText.text = currentWeapon.remainingAmmo.ToString();
     }
 
     private void HandleAiming()
     {
-        animatorManager.animator.SetBool("IsAiming", isAiming);
+        playerManager.animatorManager.animator.SetBool("IsAiming", isAiming);
     }
 
     private void HandleFiring()
     {
-        animatorManager.animator.SetBool("IsFiring", isFiring);
+        playerManager.animatorManager.animator.SetBool("IsFiring", isFiring);
     }
 }

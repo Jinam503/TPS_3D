@@ -20,4 +20,6 @@ public class WeaponItem : Item
 
     [Header("Ammo")] 
     public int remainingAmmo = 0;
+    public int maxAmmo = 20;
+    public AmmoType ammotype;
 }

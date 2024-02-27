@@ -13595,6 +13595,7 @@ GameObject:
   - component: {fileID: 981377123}
   - component: {fileID: 981377124}
   - component: {fileID: 981377125}
+  - component: {fileID: 981377126}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -13688,6 +13689,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc0e3620a00a57e47a8d35bdb6442715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLocomotion: {fileID: 0}
+  cameraManager: {fileID: 0}
+  animatorManager: {fileID: 0}
+  playerInventory: {fileID: 0}
+  playerEquipment: {fileID: 0}
+  playerUIManager: {fileID: 0}
+  playerAttacker: {fileID: 0}
   isInteracting: 0
 --- !u!114 &981377120
 MonoBehaviour:
@@ -13702,22 +13710,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 1361868073}
-  leapingVelocity: 0
-  fallingVelocity: 22
-  raycastHeightOffset: 0.5
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1
   isSprinting: 0
   isGrounded: 1
-  isJumping: 0
   isDied: 0
   walkingSpeed: 1.5
   sprintingSpeed: 6
   rotationSpeed: 9
   aimingSpeed: 1.5
-  jumpHeight: 1
-  gravityIntensity: 10
 --- !u!4 &981377121
 Transform:
   m_ObjectHideFlags: 0
@@ -13802,6 +13801,19 @@ MonoBehaviour:
   crosshair: {fileID: 2065867040}
   currentAmmoCountText: {fileID: 286797573}
   reservedAmmoCountText: {fileID: 949104854}
+--- !u!114 &981377126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981377115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f68c614cb3ecd94e955a833ef7bcc93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentAmmoInInventory: {fileID: 11400000, guid: 4c1ba35839a04714ea85b2a586e21376, type: 2}
 --- !u!1001 &1010457100
 PrefabInstance:
   m_ObjectHideFlags: 0
