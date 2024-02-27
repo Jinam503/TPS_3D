@@ -12,17 +12,16 @@ public class PlayerLocomotion : MonoBehaviour
 
     Rigidbody playerRigidbody;
 
-    //[Header("Falling")]
-    //public float leapingVelocity;
-    //public float fallingVelocity;
-    //public float raycastHeightOffset = 0.5f;
-    //public LayerMask groundLayer;
+    [Header("Falling")]
+    public float leapingVelocity;
+    public float fallingVelocity;
+    public float raycastHeightOffset = 0.5f;
+    public LayerMask groundLayer;
 
     [Header("Movement Flags")]
     public bool isSprinting;
     public bool isGrounded;
     //public bool isJumping;
-    public bool isDied;
 
     [Header("Movement Speeds")]
     public float walkingSpeed;
@@ -43,11 +42,11 @@ public class PlayerLocomotion : MonoBehaviour
     
     public void HandleAllMovement(bool isInteracting)
     {
-        if (isDied)
+        if (playerManager.isDead)
         {
             playerRigidbody.velocity = Vector3.zero;
         }
-        //HandleFallingAndLanding();
+        HandleFallingAndLanding();
 
         if (isInteracting)
         {
@@ -130,18 +129,18 @@ public class PlayerLocomotion : MonoBehaviour
         transform.rotation = playerRotation;
     }
 
-    /*private void HandleFallingAndLanding()
+    private void HandleFallingAndLanding()
     {
         RaycastHit hit;
         Vector3 raycastOrigin = transform.position;
         Vector3 targetPosition = transform.position;
         raycastOrigin.y += raycastHeightOffset;
 
-        if (!isGrounded && !isJumping)
+        if (!isGrounded)
         {
-            if (!playerManager.isInteracting && !isDied)
+            if (!playerManager.isInteracting && !playerManager.isDead)
             {
-                animatorManager.PlayTargetAnimation("Falling", true);
+                playerManager.animatorManager.PlayTargetAnimation("Falling", true);
             }
 
             playerRigidbody.AddForce(transform.forward * leapingVelocity);
@@ -151,9 +150,9 @@ public class PlayerLocomotion : MonoBehaviour
         if (Physics.SphereCast(raycastOrigin, 0.2f, Vector3.down, out hit, 0.5f, groundLayer))
             //���� ��Ҵ°�
         {
-            if (!isGrounded && playerManager.isInteracting && !isDied)
+            if (!isGrounded && playerManager.isInteracting && !playerManager.isDead)
             {
-                animatorManager.PlayTargetAnimation("Land", true);
+                playerManager.animatorManager.PlayTargetAnimation("Land", true);
             }
 
             Vector3 raycastHitPoint = hit.point;
@@ -166,7 +165,7 @@ public class PlayerLocomotion : MonoBehaviour
             isGrounded = false;
         }
 
-        if (isGrounded && !isJumping)
+        if (isGrounded)
         { // ���� ��Ҵµ� �������� �ƴϸ�  ��� ��ġ�� �����̵�
             
             if (playerManager.isInteracting || inputManager.moveAmount > 0)
@@ -178,7 +177,7 @@ public class PlayerLocomotion : MonoBehaviour
                 transform.position = targetPosition;
             }
         }
-    }*/
+    }
 
     /*public void HandleJumping()
     {

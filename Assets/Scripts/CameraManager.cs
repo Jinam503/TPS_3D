@@ -27,13 +27,16 @@ public class CameraManager : MonoBehaviour
     public float minPivotAngle = -89f;
     public float maxPivotAngle = 89f;
 
+    private float fireRecoilY;
+    private float fireRecoilX;
+    private bool firing;
     private void Awake()
     {
         inputManager = FindAnyObjectByType<InputManager>();
         targetTransform = FindObjectOfType<PlayerManager>().transform;
         playerAttacker = FindObjectOfType<PlayerManager>().GetComponent<PlayerAttacker>();
         cameraTransform = Camera.main.transform;
-        defaultPosition = -2f;
+        defaultPosition = -1.5f;
     }
 
     public void HandleAllCameraMovement()
@@ -60,6 +63,12 @@ public class CameraManager : MonoBehaviour
         pivotAngle -= (inputManager.cameraInputY * cameraPivotSpeed);
         pivotAngle = Mathf.Clamp(pivotAngle, minPivotAngle, maxPivotAngle);
 
+        if (firing)
+        {
+            lookAngle += fireRecoilX;
+            pivotAngle -= fireRecoilY;
+        }
+
         rotation = Vector3.zero;
         rotation.y = lookAngle;
         targetRotation = Quaternion.Euler(rotation);
@@ -73,7 +82,7 @@ public class CameraManager : MonoBehaviour
 
     private void SetDefaultPositionByAiming()
     {
-        defaultPosition = playerAttacker.isAiming ? -0.7f : -2f; // Aimed -> -0.7, Not Aimed -> -2
+        defaultPosition = playerAttacker.isAiming ? -0.6f : -1.5f; // Aimed -> -0.7, Not Aimed -> -2
     }
 
     private void HandleCameraCollisions()
@@ -96,5 +105,26 @@ public class CameraManager : MonoBehaviour
         }
         cameraVectorPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, 0.2f);
         cameraTransform.localPosition = cameraVectorPosition;
+    }
+
+    public IEnumerator GunRecoil()
+    {
+        firing = true;
+        fireRecoilX = Random.Range(0.3f, -0.3f);
+        float duration = 0.06f; // 전체 회전 소요 시간
+        float elapsedTime = 0f;
+
+        float goalTime = Random.Range(2f, 4f);
+        
+        while (elapsedTime < duration)
+        {   
+            fireRecoilY = Mathf.Lerp(0, goalTime, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }   
+
+        fireRecoilY = 0f;
+        firing = false;
     }
 }

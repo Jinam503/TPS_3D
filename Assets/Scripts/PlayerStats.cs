@@ -41,9 +41,14 @@ public class PlayerStats : MonoBehaviour
 
         if(currentHealth <= 0)
         {
-            currentHealth = 0;
-            playerManager.animatorManager.PlayTargetAnimation("Death From The Front", true);
-            playerManager.playerLocomotion.isDied = true;
+            KillPlayer();
         }
+    }
+
+    private void KillPlayer()
+    {
+        currentHealth = 0;
+        playerManager.animatorManager.PlayTargetAnimation("Death From The Front", true);
+        playerManager.isDead = true;
     }
 }

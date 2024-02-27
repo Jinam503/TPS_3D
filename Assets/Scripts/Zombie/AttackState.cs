@@ -28,6 +28,10 @@ public class AttackState : State
     public override State Tick(ZombieManager zombieManager)
     {
         zombieManager.animator.SetFloat("Vertical", 0, 0.2f, Time.deltaTime);
+        
+        if (zombieManager.currentTarget.isDead)
+            return this;
+        
         if (zombieManager.isPerformingAction)
         {
             zombieManager.animator.SetFloat("Vertical", 0, 0.2f, Time.deltaTime);

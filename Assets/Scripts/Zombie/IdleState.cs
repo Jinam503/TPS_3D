@@ -70,7 +70,10 @@ public class IdleState : State
                     }
                     else
                     {
-                        zombieManager.currentTarget = player;
+                        if (!player.isDead)
+                        {
+                            zombieManager.currentTarget = player;
+                        }
                     }
                 }
             }

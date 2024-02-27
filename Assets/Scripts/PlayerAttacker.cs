@@ -35,13 +35,6 @@ public class PlayerAttacker : MonoBehaviour
         playerManager = GetComponentInChildren<PlayerManager>();
     }
 
-    private void Start()
-    {
-        playerManager.playerEquipment.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().remainingAmmo = 20;
-        playerManager.playerUIManager.currentAmmoCountText.text = playerManager.playerEquipment.weaponSlotManager
-            .ReturnCurrentWeaponItemInHandSlot().remainingAmmo.ToString();
-    }
-
     private void Update()
     {
         aimRig.weight = Mathf.Lerp(aimRig.weight, aimRigWeight, Time.deltaTime * 20f);
@@ -66,14 +59,18 @@ public class PlayerAttacker : MonoBehaviour
             shootTimer = shootTimerMax;
                     
             //  When Aiming and player Alive
-            if (isAiming && !playerManager.playerLocomotion.isDied) 
+            if (isAiming && !playerManager.isDead) 
             {   
+                //  Camera Shake
+                StartCoroutine(playerManager.cameraManager.GunRecoil());
+                
                 //  Minus Bullet from magazine
                 playerManager.playerEquipment.CurrentWeapon.remainingAmmo--;
                 playerManager.playerUIManager.currentAmmoCountText.text = playerManager.playerEquipment.CurrentWeapon.remainingAmmo.ToString();
                         
                 //  Play Fire Animation
                 playerManager.animatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false);
+                
                         
                 //  Spawn Muzzle Effect
                 Vector3 muzzleSpawnPosition = weaponItem.muzzleSpawnPosition.position;
@@ -127,7 +124,7 @@ public class PlayerAttacker : MonoBehaviour
             Debug.Log("CLICK (you are out of ammo");
         }
     }
-    
+
     public void HandleReload()
     {
         WeaponItem currentWeapon = playerManager.playerEquipment.CurrentWeapon;

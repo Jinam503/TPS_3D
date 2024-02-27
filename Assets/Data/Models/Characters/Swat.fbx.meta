@@ -8,42 +8,42 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Soldier_body1
-    second: {fileID: 2100000, guid: de68f1e5ae1b51e4d88de80b9f6d00a7, type: 2}
+    second: {fileID: 2100000, guid: 554a3ff61941f0f4ab49af2c1d7080b3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Soldier_head6
-    second: {fileID: 2100000, guid: d39afe9476550634d86cfba86f2fae48, type: 2}
+    second: {fileID: 2100000, guid: c284f1e4c145f0e488a1b2b031c6e1f5, type: 2}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Soldier_Body_diffuse
-    second: {fileID: 2800000, guid: 5c2a841d63f0379449ac855ee0d43c29, type: 3}
+    second: {fileID: 2800000, guid: 87bf3def02f225245816efb517c087be, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Soldier_Body_normal
-    second: {fileID: 2800000, guid: 4fdc2ae8822279e4187e97e7b34b44f0, type: 3}
+    second: {fileID: 2800000, guid: e72f4d2fff6aab44784d87d1c0ae7b02, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Soldier_Body_specular
-    second: {fileID: 2800000, guid: 62091931ac4b51c46a2c735211babfb8, type: 3}
+    second: {fileID: 2800000, guid: 34c48d9a972fd7148ba76949ddeeafd2, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Soldier_head_diffuse
-    second: {fileID: 2800000, guid: beb95c143c0cc1342945976bd69b8916, type: 3}
+    second: {fileID: 2800000, guid: 0477d9ee23645574d8b01d4313e2ea59, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Soldier_head_normal
-    second: {fileID: 2800000, guid: 7db3fca757a6468428e95d6b138f9623, type: 3}
+    second: {fileID: 2800000, guid: 090f62f77b3f80c49aa0a4c665736d15, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Soldier_head_specular
-    second: {fileID: 2800000, guid: 2424495be5faccb49af78d59ba77deb6, type: 3}
+    second: {fileID: 2800000, guid: d7b932b2802d3d04cbe79098a47506ff, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

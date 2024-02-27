@@ -15,10 +15,11 @@ public class WeaponSlotManager : MonoBehaviour
     public void LoadWeaponOnSlot(WeaponItem weaponItem)
     {
         handSlot.LoadWeaponModel(weaponItem);
+        playerManager.playerEquipment.CurrentWeapon.remainingAmmo = playerManager.playerEquipment.CurrentWeapon.maxAmmo;
         playerManager.playerUIManager.currentAmmoCountText.text = weaponItem.remainingAmmo.ToString();
 
         if (playerManager.playerInventory.currentAmmoInInventory != null)
-        {
+        {   
             if (playerManager.playerInventory.currentAmmoInInventory.ammoType == weaponItem.ammotype)
             {
                 playerManager.playerUIManager.reservedAmmoCountText.text =

@@ -6,8 +6,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     Animator animator;
-    InputManager inputManager;
-    
+    public InputManager inputManager;
     public PlayerLocomotion playerLocomotion;
     public CameraManager cameraManager;
     public AnimatorManager animatorManager;
@@ -15,8 +14,11 @@ public class PlayerManager : MonoBehaviour
     public PlayerEquipment playerEquipment;
     public PlayerUIManager playerUIManager;
     public PlayerAttacker playerAttacker;
+    public PlayerStats playerStats;
 
     public bool isInteracting;
+    public bool canInteract;
+    public bool isDead;
 
     private void Awake()
     {
@@ -32,12 +34,19 @@ public class PlayerManager : MonoBehaviour
         playerUIManager = GetComponent<PlayerUIManager>();
         playerInventory = GetComponent<PlayerInventory>();
         playerAttacker = GetComponent<PlayerAttacker>();
+        playerStats = GetComponent<PlayerStats>();
+    }
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Debug.Log("Cursor Visible : " + Cursor.visible);
+        Debug.Log("Cursor LockState : " + Cursor.lockState);
         inputManager.HandleAllInputs();
     }
 
@@ -54,5 +63,6 @@ public class PlayerManager : MonoBehaviour
         isInteracting = animator.GetBool("IsInteracting");
         //playerLocomotion.isJumping = animator.GetBool("IsJumping");
         animator.SetBool("IsGrounded", playerLocomotion.isGrounded);
+        animator.SetBool("IsDead", isDead);
     }
 }

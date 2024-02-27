@@ -29,6 +29,7 @@ public class InputManager : MonoBehaviour
     public bool inputMouseLeft;
 
     public bool inputReload;
+    public bool inputInteract;
 
     private void Awake()
     {
@@ -56,6 +57,8 @@ public class InputManager : MonoBehaviour
             playerControls.PlayerActions.Fire.canceled += i => inputMouseLeft = false;
 
             playerControls.PlayerActions.Reload.performed += i => inputReload = true;
+
+            playerControls.PlayerActions.Interact.performed += i => inputInteract = true;
         }
 
         playerControls.Enable();
@@ -73,6 +76,7 @@ public class InputManager : MonoBehaviour
         HandleAimingInput();
         HandleFireInput();
         HandleReloadInput();
+        HandleInteractionInput();
     }
 
     private void HandleMovementInput()
@@ -160,10 +164,21 @@ public class InputManager : MonoBehaviour
         if (inputReload &&
             !playerManager.playerAttacker.isReloading &&
             !playerManager.playerAttacker.isFiring &&
-            !playerManager.playerLocomotion.isDied)
+            !playerManager.isDead)
         {
             inputReload = false;
             playerManager.playerAttacker.HandleReload();
+        }
+    }
+
+    private void HandleInteractionInput()
+    {
+        if (inputInteract)
+        {
+            if (!playerManager.canInteract)
+            {
+                inputInteract = false;
+            }
         }
     }
 }
