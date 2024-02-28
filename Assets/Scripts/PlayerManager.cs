@@ -14,7 +14,9 @@ public class PlayerManager : MonoBehaviour
     public PlayerEquipment playerEquipment;
     public PlayerUIManager playerUIManager;
     public PlayerAttacker playerAttacker;
-    public PlayerStats playerStats;
+    public GameMenu gameMenu;
+    
+    private PlayerStats playerStats;
 
     public bool isInteracting;
     public bool canInteract;
@@ -35,18 +37,17 @@ public class PlayerManager : MonoBehaviour
         playerInventory = GetComponent<PlayerInventory>();
         playerAttacker = GetComponent<PlayerAttacker>();
         playerStats = GetComponent<PlayerStats>();
+        gameMenu = GetComponent<GameMenu>();
     }
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     private void Update()
     {
-        Debug.Log("Cursor Visible : " + Cursor.visible);
-        Debug.Log("Cursor LockState : " + Cursor.lockState);
         inputManager.HandleAllInputs();
     }
 

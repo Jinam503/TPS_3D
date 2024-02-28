@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour
 
     public bool inputReload;
     public bool inputInteract;
-
+    public bool inputTab;
     private void Awake()
     {
         playerManager = GetComponent<PlayerManager>();
@@ -59,6 +59,8 @@ public class InputManager : MonoBehaviour
             playerControls.PlayerActions.Reload.performed += i => inputReload = true;
 
             playerControls.PlayerActions.Interact.performed += i => inputInteract = true;
+
+            playerControls.PlayerActions.OpenInventory.performed += i => inputTab = true;
         }
 
         playerControls.Enable();
@@ -77,7 +79,10 @@ public class InputManager : MonoBehaviour
         HandleFireInput();
         HandleReloadInput();
         HandleInteractionInput();
+        HandleOpenMenuInput();
     }
+
+  
 
     private void HandleMovementInput()
     {
@@ -178,7 +183,16 @@ public class InputManager : MonoBehaviour
             if (!playerManager.canInteract)
             {
                 inputInteract = false;
+                playerManager.canInteract = false;
             }
+        }
+    }  
+    private void HandleOpenMenuInput()
+    {
+        if (inputTab)
+        {
+            inputTab = false;
+            playerManager.gameMenu.HandleMenu();
         }
     }
 }

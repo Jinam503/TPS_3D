@@ -111,7 +111,7 @@ public class CameraManager : MonoBehaviour
     {
         firing = true;
         fireRecoilX = Random.Range(0.3f, -0.3f);
-        float duration = 0.06f; // 전체 회전 소요 시간
+        float duration = 0.04f; // 전체 회전 소요 시간
         float elapsedTime = 0f;
 
         float goalTime = Random.Range(2f, 4f);

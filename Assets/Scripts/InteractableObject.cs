@@ -9,7 +9,7 @@ public class InteractableObject : MonoBehaviour
     protected Collider interactableCollider;
     [SerializeField] GameObject interactableCanvus;
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (!player)
         {
@@ -23,19 +23,19 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    protected void OnTriggerStay(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
         if (player)
         {
             if (player.inputManager.inputInteract)
             {
-                Interact(player);
                 player.inputManager.inputInteract = false;
+                Interact(player);
             }
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (!player)
         {
@@ -50,6 +50,6 @@ public class InteractableObject : MonoBehaviour
 
     protected virtual void Interact(PlayerManager player)
     {
-        Debug.Log("You have Interacted");
+            Debug.Log("You have Interacted");
     }
 }

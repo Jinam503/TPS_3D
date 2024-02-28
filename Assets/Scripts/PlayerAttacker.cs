@@ -128,7 +128,7 @@ public class PlayerAttacker : MonoBehaviour
     public void HandleReload()
     {
         WeaponItem currentWeapon = playerManager.playerEquipment.CurrentWeapon;
-        BoxOfAmmoItem boxOfAmmoItem = playerManager.playerInventory.currentAmmoInInventory;
+        int remainingAmmoInInventory = playerManager.playerInventory.GetAmountOfAmmoByAmmoType(currentWeapon.ammotype);
 
         if (currentWeapon.remainingAmmo == currentWeapon.maxAmmo)
         {
@@ -136,17 +136,14 @@ public class PlayerAttacker : MonoBehaviour
             return;
         }
         
-        //  Check to see if it has ammo in inventory for this particular weapon, if we do not, return
-        if (boxOfAmmoItem){
-            if (boxOfAmmoItem.ammoType == currentWeapon.ammotype && boxOfAmmoItem.ammoRemaining > 0)
-            {
-                isReloading = true;
-                rightHandRigWeight = 0f;
-                aimRigWeight = 0f;
+        if (remainingAmmoInInventory > 0)
+        {
+            isReloading = true;
+            rightHandRigWeight = 0f;
+            aimRigWeight = 0f;
         
-                playerManager.animatorManager.animator.SetBool("IsReloading", true);
-                playerManager.animatorManager.PlayTargetAnimation("Rifle Reload", false);
-            }
+            playerManager.animatorManager.animator.SetBool("IsReloading", true);
+            playerManager.animatorManager.PlayTargetAnimation("Rifle Reload", false);
         }
     
     }
@@ -156,26 +153,16 @@ public class PlayerAttacker : MonoBehaviour
         //  Change Ammo States
         isReloading = false;
         WeaponItem currentWeapon = playerManager.playerEquipment.CurrentWeapon;
-        BoxOfAmmoItem boxOfAmmoItem = playerManager.playerInventory.currentAmmoInInventory;
+        int remainingAmmoInInventory = playerManager.playerInventory.GetAmountOfAmmoByAmmoType(currentWeapon.ammotype);
         
         int amountOfAmmoToReload =
             playerManager.playerEquipment.CurrentWeapon.maxAmmo -
             playerManager.playerEquipment.CurrentWeapon.remainingAmmo;
-
-        //  If it has MORE ammo remaining than we need to put in our weapon, we subtract from TOTAL
-        if (boxOfAmmoItem.ammoRemaining >= amountOfAmmoToReload)
-        {
-            currentWeapon.remainingAmmo = currentWeapon.maxAmmo;
-            boxOfAmmoItem.ammoRemaining -= amountOfAmmoToReload;
-        }
-        //  If it has LESS ammo remaining than we need to put in our weapon, we just set to 0 and put in to our weapon
-        else
-        {
-            currentWeapon.remainingAmmo += boxOfAmmoItem.ammoRemaining;
-            boxOfAmmoItem.ammoRemaining = 0;
-        }
-                
-        playerManager.playerUIManager.reservedAmmoCountText.text = boxOfAmmoItem.ammoRemaining.ToString();
+        
+        currentWeapon.remainingAmmo += playerManager.playerInventory.UseAmmoByAmmoType(currentWeapon, amountOfAmmoToReload);
+        
+        playerManager.playerUIManager.reservedAmmoCountText.text = 
+            playerManager.playerInventory.GetAmountOfAmmoByAmmoType(currentWeapon.ammotype).ToString();
         playerManager.playerUIManager.currentAmmoCountText.text = currentWeapon.remainingAmmo.ToString();
     }
 

@@ -14,11 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: MDRX
   itemIcon: {fileID: 0}
+  itemID: 
+  maxquantity: 1
+  isStackable: 0
+  description: 
   modelPrefab: {fileID: 6633297992522936585, guid: 60583cc91eb808240ac3a40f7557ce70, type: 3}
   isUnarmed: 0
   muzzleSpawnPosition: {fileID: 0}
   muzzleFlashPrefab: {fileID: 6465474405900088282, guid: 7928f3996eb0512429dfb761c7289804, type: 3}
   Rifle_Fire: Fire
-  Rifle_Reload: 
+  Rifle_Reload: Reload
   damage: 20
-  remainingAmmo: 19
+  remainingAmmo: 20
+  maxAmmo: 20
+  ammotype: 0

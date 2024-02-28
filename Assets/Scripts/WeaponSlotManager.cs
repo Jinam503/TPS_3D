@@ -18,14 +18,10 @@ public class WeaponSlotManager : MonoBehaviour
         playerManager.playerEquipment.CurrentWeapon.remainingAmmo = playerManager.playerEquipment.CurrentWeapon.maxAmmo;
         playerManager.playerUIManager.currentAmmoCountText.text = weaponItem.remainingAmmo.ToString();
 
-        if (playerManager.playerInventory.currentAmmoInInventory != null)
-        {   
-            if (playerManager.playerInventory.currentAmmoInInventory.ammoType == weaponItem.ammotype)
-            {
-                playerManager.playerUIManager.reservedAmmoCountText.text =
-                    playerManager.playerInventory.currentAmmoInInventory.ammoRemaining.ToString();
-            }
-        }
+        int remainingAmmoInInventory = playerManager.playerInventory.GetAmountOfAmmoByAmmoType(weaponItem.ammotype);
+        
+        playerManager.playerUIManager.reservedAmmoCountText.text =
+            remainingAmmoInInventory.ToString();
     }
 
     public WeaponItem ReturnCurrentWeaponItemInHandSlot()

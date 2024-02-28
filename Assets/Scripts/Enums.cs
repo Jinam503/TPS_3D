@@ -9,7 +9,7 @@ public class Enums : MonoBehaviour
 
 public enum AmmoType
 {
-    dmr,
+    rifle,
     pistol,
     shotgun,
 }
