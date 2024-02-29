@@ -37,7 +37,7 @@ public class PlayerStats : MonoBehaviour
 
         healthBar.SetCurrentHealth(currentHealth);
 
-        playerManager.playerAnimatorManager.PlayTargetAnimation("Hit Reaction", false);
+        playerManager.playerAnimatorManager.PlayTargetActionAnimation("Hit Reaction", false);
 
         if(currentHealth <= 0)
         {
@@ -48,7 +48,7 @@ public class PlayerStats : MonoBehaviour
     private void KillPlayer()
     {
         currentHealth = 0;
-        playerManager.playerAnimatorManager.PlayTargetAnimation("Death From The Front", true);
+        playerManager.playerAnimatorManager.PlayTargetActionAnimation("Death From The Front", true);
         playerManager.isDead = true;
     }
 }

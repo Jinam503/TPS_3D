@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class CharacterAnimatorManager : MonoBehaviour
 {
-    private CharacterManager character;
+    protected CharacterManager character;
 
     private int vertical;
     private int horizontal;
@@ -23,7 +24,13 @@ public class CharacterAnimatorManager : MonoBehaviour
         {
             verticalAmount = 2;
         }
-        character.animator.SetFloat(vertical, horizontalAmount, 0.1f, Time.deltaTime);   
-        character.animator.SetFloat(horizontal, verticalAmount, 0.1f, Time.deltaTime);   
+        character.animator.SetFloat(vertical, verticalAmount, 0.1f, Time.deltaTime);   
+        character.animator.SetFloat(horizontal, horizontalAmount, 0.1f, Time.deltaTime);   
+    }
+
+    public virtual void PlayTargetActionAnimation(string targetAnimation, bool isPerformingAction)
+    {
+        character.isPerformingAction = isPerformingAction;
+        character.characterNetworkManager.NotifyTheServerOfActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation);
     }
 }

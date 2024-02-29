@@ -47,13 +47,17 @@ public class CharacterLocomotion : MonoBehaviour
             inAirTimer += Time.deltaTime;
 
             yVelocity.y += gravityForce * Time.deltaTime;
-
-            chracter.characterController.Move(yVelocity * Time.deltaTime);
         }
+        chracter.characterController.Move(yVelocity * Time.deltaTime);
     }
 
     private void HandleGroundCheck()
     {
         chracter.isGrounded = Physics.CheckSphere(chracter.transform.position, groundCheckSphereRadius, groundLayer);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(chracter.transform.position, groundCheckSphereRadius);
     }
 }

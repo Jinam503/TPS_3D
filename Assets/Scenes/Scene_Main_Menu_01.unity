@@ -1418,11 +1418,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9005280743581726793, guid: 00a71ace75272e341bcd1b01a6c9def8, type: 3}
       propertyPath: upAndDownRotationSpeed
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9005280743581726793, guid: 00a71ace75272e341bcd1b01a6c9def8, type: 3}
       propertyPath: leftAndRightRotationSpeed
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

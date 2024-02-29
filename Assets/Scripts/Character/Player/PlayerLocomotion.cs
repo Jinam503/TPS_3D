@@ -13,7 +13,6 @@ public class PlayerLocomotion : CharacterLocomotion
     public float horizontalMovement;
     public float moveAmount;
 
-    Rigidbody playerRigidbody;
 
     [Header("Movement Speeds")]
     [SerializeField] private float walkingSpeed;
@@ -23,7 +22,6 @@ public class PlayerLocomotion : CharacterLocomotion
     protected override void Awake()
     {
         base.Awake();
-        playerRigidbody = GetComponent<Rigidbody>();
         player = GetComponent<PlayerManager>();
     }
 
@@ -49,12 +47,6 @@ public class PlayerLocomotion : CharacterLocomotion
 
     public void HandleAllMovement(bool isInteracting)
     {
-        if (player.isDead)
-        {
-            playerRigidbody.velocity = Vector3.zero;
-        }
-        //HandleFallingAndLanding();
-
         if (isInteracting)
         {
             return;
@@ -95,13 +87,6 @@ public class PlayerLocomotion : CharacterLocomotion
                 player.characterController.Move(moveDirection * aimingSpeed * Time.deltaTime);
             }
         }
-
-        //if (isGrounded && !player.isInteracting)
-        //{
-        //    Vector3 movementVelocity = moveDirection;
-        //    playerRigidbody.velocity = movementVelocity;
-        //}
-
     }
 
     private void HandleRotation()

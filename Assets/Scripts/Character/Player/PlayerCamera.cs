@@ -75,12 +75,6 @@ public class PlayerCamera : MonoBehaviour
         upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
         upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
 
-        if (firing)
-        {
-            leftAndRightLookAngle += fireRecoilX;
-            upAndDownLookAngle -= fireRecoilY;
-        }
-
         rotation = Vector3.zero;
         rotation.y = leftAndRightLookAngle;
         targetRotation = Quaternion.Euler(rotation);
@@ -121,26 +115,5 @@ public class PlayerCamera : MonoBehaviour
         }
         cameObjectPosition.z = Mathf.Lerp(cameraObject.transform.localPosition.z, targetCameraPosition, 0.2f);
         cameraObject.transform.localPosition = cameObjectPosition;
-    }
-    
-    public IEnumerator GunRecoil()
-    {
-        firing = true;
-        fireRecoilX = Random.Range(0.3f, -0.3f);
-        float duration = 0.04f; // 전체 회전 소요 시간
-        float elapsedTime = 0f;
-
-        float goalTime = Random.Range(2f, 4f);
-        
-        while (elapsedTime < duration)
-        {   
-            fireRecoilY = Mathf.Lerp(0, goalTime, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }   
-
-        fireRecoilY = 0f;
-        firing = false;
     }
 }

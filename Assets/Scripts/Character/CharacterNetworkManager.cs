@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.Serialization;
+using UnityEngine.TextCore.Text;
 
 public class CharacterNetworkManager : NetworkBehaviour
 {
+    private CharacterManager character;
+    
     [Header("Position")]
     public NetworkVariable<Vector3> networkPosition = 
         new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -26,4 +30,32 @@ public class CharacterNetworkManager : NetworkBehaviour
     [Header("Flags")] 
     public NetworkVariable<bool> isRunning = 
         new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    protected void Awake()
+    {
+        character = GetComponent<CharacterManager>();
+    }
+
+    [ServerRpc]
+    public void NotifyTheServerOfActionAnimationServerRpc(ulong clientID, string animationID)
+    {
+        if (IsServer)
+        {
+            PlayerActionAnimationForAllClientsClientRpc(clientID, animationID);
+        }
+    }
+
+    [ClientRpc]
+    private void PlayerActionAnimationForAllClientsClientRpc(ulong clientID, string animationID)
+    {
+        if (clientID != NetworkManager.Singleton.LocalClientId)
+        {
+            PerformActionAnimationFromServer(animationID);
+        }
+    }
+    
+    private void PerformActionAnimationFromServer(string animationID)
+    {
+        character.animator.CrossFade(animationID, 0.2f);
+    }
 }

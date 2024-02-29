@@ -19,7 +19,6 @@ public class PlayerManager : CharacterManager
     
     private PlayerStats playerStats;
 
-    public bool isPerformingAction;
     public bool canInteract;
     public bool isDead;
 

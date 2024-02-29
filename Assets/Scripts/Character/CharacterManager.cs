@@ -11,8 +11,8 @@ public class CharacterManager :  NetworkBehaviour
 
     [HideInInspector] public CharacterNetworkManager characterNetworkManager;
 
-    public bool isGrounded = true;
-
+    public bool isGrounded;
+    public bool isPerformingAction;
     protected virtual void Awake()
     {
         DontDestroyOnLoad(this);

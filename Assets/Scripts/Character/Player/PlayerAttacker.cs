@@ -61,15 +61,12 @@ public class PlayerAttacker : MonoBehaviour
             //  When Aiming and player Alive
             if (isAiming && !playerManager.isDead) 
             {   
-                //  Camera Shake
-                StartCoroutine(PlayerCamera.instance.GunRecoil());
-                
                 //  Minus Bullet from magazine
                 playerManager.playerEquipment.CurrentWeapon.remainingAmmo--;
                 playerManager.playerUIManager.currentAmmoCountText.text = playerManager.playerEquipment.CurrentWeapon.remainingAmmo.ToString();
                         
                 //  Play Fire Animation
-                playerManager.playerAnimatorManager.PlayTargetAnimation(weaponItem.Rifle_Fire, false);
+                playerManager.playerAnimatorManager.PlayTargetActionAnimation(weaponItem.Rifle_Fire, false);
                 
                         
                 //  Spawn Muzzle Effect
@@ -143,7 +140,7 @@ public class PlayerAttacker : MonoBehaviour
             aimRigWeight = 0f;
         
             playerManager.animator.SetBool("IsReloading", true);
-            playerManager.playerAnimatorManager.PlayTargetAnimation("Rifle Reload", false);
+            playerManager.playerAnimatorManager.PlayTargetActionAnimation("Rifle Reload", false);
         }
     
     }
