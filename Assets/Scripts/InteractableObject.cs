@@ -27,9 +27,9 @@ public class InteractableObject : MonoBehaviour
     {
         if (player)
         {
-            if (player.inputManager.inputInteract)
+            if (PlayerInputManager.instance.interactInput)
             {
-                player.inputManager.inputInteract = false;
+                PlayerInputManager.instance.interactInput = false;
                 Interact(player);
             }
         }
