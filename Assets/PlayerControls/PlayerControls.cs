@@ -184,24 +184,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Toggle Movment Mode"",
-                    ""type"": ""Button"",
-                    ""id"": ""3a4d9476-314e-4bf3-8441-5e2ea5ba14a7"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""a28226f5-b694-4089-a1d3-57c830f95b68"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Aim"",
                     ""type"": ""Button"",
                     ""id"": ""352e0315-395e-4606-bdaa-1e16ecdbaaa9"",
@@ -243,7 +225,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""4b0ac10d-b042-475e-acd2-86a91ec94c97"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -256,28 +238,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9f710f2d-1dca-4ac6-b995-f84d343ef6b8"",
-                    ""path"": ""<Keyboard>/leftCtrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Toggle Movment Mode"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""df905dcf-3d46-4914-acc1-76c20d484563"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -348,8 +308,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Player Actions
         m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
-        m_PlayerActions_ToggleMovmentMode = m_PlayerActions.FindAction("Toggle Movment Mode", throwIfNotFound: true);
-        m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         m_PlayerActions_Aim = m_PlayerActions.FindAction("Aim", throwIfNotFound: true);
         m_PlayerActions_Fire = m_PlayerActions.FindAction("Fire", throwIfNotFound: true);
         m_PlayerActions_Reload = m_PlayerActions.FindAction("Reload", throwIfNotFound: true);
@@ -471,8 +429,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerActions;
     private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
     private readonly InputAction m_PlayerActions_Sprint;
-    private readonly InputAction m_PlayerActions_ToggleMovmentMode;
-    private readonly InputAction m_PlayerActions_Jump;
     private readonly InputAction m_PlayerActions_Aim;
     private readonly InputAction m_PlayerActions_Fire;
     private readonly InputAction m_PlayerActions_Reload;
@@ -483,8 +439,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         private @PlayerControls m_Wrapper;
         public PlayerActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
-        public InputAction @ToggleMovmentMode => m_Wrapper.m_PlayerActions_ToggleMovmentMode;
-        public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
         public InputAction @Aim => m_Wrapper.m_PlayerActions_Aim;
         public InputAction @Fire => m_Wrapper.m_PlayerActions_Fire;
         public InputAction @Reload => m_Wrapper.m_PlayerActions_Reload;
@@ -502,12 +456,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
-            @ToggleMovmentMode.started += instance.OnToggleMovmentMode;
-            @ToggleMovmentMode.performed += instance.OnToggleMovmentMode;
-            @ToggleMovmentMode.canceled += instance.OnToggleMovmentMode;
-            @Jump.started += instance.OnJump;
-            @Jump.performed += instance.OnJump;
-            @Jump.canceled += instance.OnJump;
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
@@ -530,12 +478,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
-            @ToggleMovmentMode.started -= instance.OnToggleMovmentMode;
-            @ToggleMovmentMode.performed -= instance.OnToggleMovmentMode;
-            @ToggleMovmentMode.canceled -= instance.OnToggleMovmentMode;
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
@@ -576,8 +518,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IPlayerActionsActions
     {
         void OnSprint(InputAction.CallbackContext context);
-        void OnToggleMovmentMode(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);

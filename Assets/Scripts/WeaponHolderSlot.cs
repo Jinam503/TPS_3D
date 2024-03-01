@@ -6,7 +6,7 @@ public class WeaponHolderSlot : MonoBehaviour
 {
     public Transform parentOverride;
     public WeaponItem currentWeapon;
-    public GameObject currentWeaponModel;
+    GameObject currentWeaponModel;
 
     public void UnloadWeapon()
     {

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
 
 public class CharacterAnimatorManager : MonoBehaviour
@@ -31,6 +30,6 @@ public class CharacterAnimatorManager : MonoBehaviour
     public virtual void PlayTargetActionAnimation(string targetAnimation, bool isPerformingAction)
     {
         character.isPerformingAction = isPerformingAction;
-        character.characterNetworkManager.NotifyTheServerOfActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation);
+        character.animator.CrossFade(targetAnimation, 0.2f);
     }
 }

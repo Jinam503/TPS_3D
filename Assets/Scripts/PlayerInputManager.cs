@@ -41,8 +41,6 @@ public class PlayerInputManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        player = GetComponent<PlayerManager>();
-
     }
 
     private void Start()
@@ -51,8 +49,6 @@ public class PlayerInputManager : MonoBehaviour
         
         //  WHEN SCENE CHANGES, RUN THIS LOGIC
         SceneManager.activeSceneChanged += OnSceneChange;
-        
-        instance.enabled = false;
     }
 
     private void OnSceneChange(Scene oldScene, Scene newScene)
@@ -152,7 +148,7 @@ public class PlayerInputManager : MonoBehaviour
         if (player == null)
             return;
         
-        player.playerAnimatorManager.UpdateAnimatorMovementParameters(0,moveAmount, player.playerNeworkManager.isRunning.Value);
+        player.playerAnimatorManager.UpdateAnimatorMovementParameters(0,moveAmount, player.playerLocomotion.isRunning);
     }
 
     private void HandleCameraMovementInput()
@@ -169,7 +165,7 @@ public class PlayerInputManager : MonoBehaviour
         }
         else
         {
-            player.playerNeworkManager.isRunning.Value = false;
+            player.playerLocomotion.isRunning = false;
         }
     }
 

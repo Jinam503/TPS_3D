@@ -1283,83 +1283,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad3e74b47456de04290bb5a3849ec283, type: 3}
---- !u!1001 &6119073518620350971
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 988348268573234063, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 463.17734
-      objectReference: {fileID: 0}
-    - target: {fileID: 988348268573234063, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 14.122675
-      objectReference: {fileID: 0}
-    - target: {fileID: 988348268573234063, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 146.47563
-      objectReference: {fileID: 0}
-    - target: {fileID: 988348268573234063, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 988348268573234063, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 988348268573234063, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 988348268573234063, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 988348268573234063, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 988348268573234063, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 988348268573234063, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691640122451230072, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: RunInBackground
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691640122451230072, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: NetworkConfig.ForceSamePrefabs
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691640122451230072, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: NetworkConfig.Prefabs.NetworkPrefabsLists.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4691640122451230072, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: NetworkConfig.Prefabs.NetworkPrefabsLists.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 14bbb1efd56ea5847b35a4b9bfa5c44d, type: 2}
-    - target: {fileID: 5061225569301800581, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: ConnectionData.ServerListenAddress
-      value: 127.0.0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816931918629692864, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
-      propertyPath: m_Name
-      value: World NetWork Manager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6466f097215038b4d9de1ea777bcafcb, type: 3}
 --- !u!1001 &8845882521488879707
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1418,11 +1341,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9005280743581726793, guid: 00a71ace75272e341bcd1b01a6c9def8, type: 3}
       propertyPath: upAndDownRotationSpeed
-      value: 4
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 9005280743581726793, guid: 00a71ace75272e341bcd1b01a6c9def8, type: 3}
       propertyPath: leftAndRightRotationSpeed
-      value: 4
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1495,6 +1418,5 @@ SceneRoots:
   - {fileID: 711282236}
   - {fileID: 5432948240856130674}
   - {fileID: 1636266482128788573}
-  - {fileID: 6119073518620350971}
   - {fileID: 8855069942465895452}
   - {fileID: 8845882521488879707}

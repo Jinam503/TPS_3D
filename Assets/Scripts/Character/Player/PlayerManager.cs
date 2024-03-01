@@ -9,7 +9,6 @@ public class PlayerManager : CharacterManager
 {
     public PlayerLocomotion playerLocomotion;
     public PlayerAnimatorManager playerAnimatorManager;
-    public PlayerNeworkManager playerNeworkManager;
     
     [HideInInspector] public PlayerInventory playerInventory;
     [HideInInspector] public PlayerEquipment playerEquipment;
@@ -25,12 +24,11 @@ public class PlayerManager : CharacterManager
     protected override void Awake()
     {
         base.Awake();
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         playerLocomotion = GetComponent<PlayerLocomotion>();
         playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
-        playerNeworkManager = GetComponent<PlayerNeworkManager>();
         
         playerEquipment = GetComponent<PlayerEquipment>();
         playerUIManager = GetComponent<PlayerUIManager>();
@@ -38,6 +36,9 @@ public class PlayerManager : CharacterManager
         playerAttacker = GetComponent<PlayerAttacker>();
         playerStats = GetComponent<PlayerStats>();
         gameMenu = GetComponent<GameMenu>();
+
+        PlayerCamera.instance.player = this;
+        PlayerInputManager.instance.player = this;
     }
 
 
@@ -45,34 +46,16 @@ public class PlayerManager : CharacterManager
     {
         base.Update();
 
-        if (!IsOwner)
-            return;
-
         playerLocomotion.HandleAllMovement(isPerformingAction);
     }
 
     protected override void LateUpdate()
     {
-        if(!IsOwner)
-            return;
-        
         base.LateUpdate();
         
         PlayerCamera.instance.HandleAllCameraActions();
 
         isPerformingAction = animator.GetBool("IsInteracting");
         animator.SetBool("IsDead", isDead);
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-
-        if (IsOwner)
-        {
-            PlayerCamera.instance.player = this;
-            PlayerInputManager.instance.player = this;
-
-        }
     }
 }

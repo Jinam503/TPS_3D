@@ -19,6 +19,9 @@ public class PlayerLocomotion : CharacterLocomotion
     [SerializeField] private float runningSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float aimingSpeed;
+
+    [Header("FLAGS")] 
+    public bool isRunning;
     protected override void Awake()
     {
         base.Awake();
@@ -29,20 +32,7 @@ public class PlayerLocomotion : CharacterLocomotion
     {
         base.Update();
         ;
-        if (player.IsOwner)
-        {
-            player.characterNetworkManager.verticalMovement.Value = verticalMovement;
-            player.characterNetworkManager.horizontalMovement.Value = horizontalMovement;
-            player.characterNetworkManager.moveAmount.Value = moveAmount;
-        }
-        else
-        {
-            verticalMovement = player.characterNetworkManager.verticalMovement.Value;
-            horizontalMovement = player.characterNetworkManager.horizontalMovement.Value;
-            moveAmount = player.characterNetworkManager.moveAmount.Value;
-
-            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, player.playerNeworkManager.isRunning.Value);
-        }
+        player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, isRunning);
     }
 
     public void HandleAllMovement(bool isInteracting)
@@ -122,16 +112,16 @@ public class PlayerLocomotion : CharacterLocomotion
     {
         if (player.isPerformingAction)
         {
-            player.playerNeworkManager.isRunning.Value = false;
+            isRunning = false;
         }
 
         if (moveAmount >= 0.9f)
         {
-            player.playerNeworkManager.isRunning.Value = true;
+            isRunning = true;
         }
         else
         {
-            player.playerNeworkManager.isRunning.Value = false;
+            isRunning = false;
         }
     }
 }
