@@ -17,6 +17,7 @@ public class PlayerEquipment : MonoBehaviour
 
     private void Start()
     {
+        //  Must be Deleted
         weaponSlotManager.LoadWeaponOnSlot(weaponItem);
     }
 }

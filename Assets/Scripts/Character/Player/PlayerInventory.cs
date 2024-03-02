@@ -108,15 +108,15 @@ public class PlayerInventory : MonoBehaviour
         
         if (playerManager.playerEquipment.CurrentWeapon.ammotype == AmmoType.rifle && item.itemID == "AmmoRifleItem")
         {
-            playerManager.playerUIManager.reservedAmmoCountText.text = GetAmountOfAmmoByAmmoType(AmmoType.rifle).ToString();
+            PlayerUIManager.instance.reservedAmmoCountText.text = GetAmountOfAmmoByAmmoType(AmmoType.rifle).ToString();
         }
         else if(playerManager.playerEquipment.CurrentWeapon.ammotype == AmmoType.pistol &&item.itemID == "AmmoPistolItem")
         {
-            playerManager.playerUIManager.reservedAmmoCountText.text = GetAmountOfAmmoByAmmoType(AmmoType.pistol).ToString();
+            PlayerUIManager.instance.reservedAmmoCountText.text = GetAmountOfAmmoByAmmoType(AmmoType.pistol).ToString();
         }
         else if(playerManager.playerEquipment.CurrentWeapon.ammotype == AmmoType.shotgun && item.itemID == "AmmoShotgunItem")
         {
-            playerManager.playerUIManager.reservedAmmoCountText.text = GetAmountOfAmmoByAmmoType(AmmoType.shotgun).ToString();
+            PlayerUIManager.instance.reservedAmmoCountText.text = GetAmountOfAmmoByAmmoType(AmmoType.shotgun).ToString();
         }
     }
 

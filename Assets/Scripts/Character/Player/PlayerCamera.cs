@@ -26,10 +26,6 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private float upAndDownLookAngle;
     private float defaultCameraPosition;
     private float targetCameraPosition;
-
-    private float fireRecoilY;
-    private float fireRecoilX;
-    private bool firing;
     private void Awake()
     {
         if (instance == null)
@@ -88,7 +84,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void SetDefaultPositionByAiming()
     {
-        defaultCameraPosition = player.playerAttacker.isAiming ? -0.6f : -1.5f; // Aimed -> -0.7, Not Aimed -> -2
+        defaultCameraPosition = player.playerAttacker.isAiming ? -0.9f : -1.5f; // Aimed -> -0.7, Not Aimed -> -2
     }
 
     private void HandleCameraCollisions()

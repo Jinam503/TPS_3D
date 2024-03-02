@@ -16,7 +16,6 @@ public class CharacterLocomotion : MonoBehaviour
     [SerializeField] protected float groundedYVelocity = -20;
     [SerializeField] protected float fallStartYVelocity = -5;
     protected bool fallngVelocityHasBeenSet = false;
-    protected float inAirTimer = 0;
 
     protected virtual void Awake()
     {
@@ -31,7 +30,6 @@ public class CharacterLocomotion : MonoBehaviour
         {
             if (yVelocity.y < 0)
             {
-                inAirTimer = 0;
                 fallngVelocityHasBeenSet = false;
                 yVelocity.y = groundedYVelocity;
             }
@@ -43,8 +41,6 @@ public class CharacterLocomotion : MonoBehaviour
                 fallngVelocityHasBeenSet = true;
                 yVelocity.y = fallStartYVelocity;
             }
-
-            inAirTimer += Time.deltaTime;
 
             yVelocity.y += gravityForce * Time.deltaTime;
         }

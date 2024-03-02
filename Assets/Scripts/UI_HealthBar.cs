@@ -11,13 +11,12 @@ public class UI_HealthBar : MonoBehaviour
     {
         slider = GetComponent<Slider>();
     }
-
+    
     public void SetMaxHealth(int maxHealth)
     {
         slider.maxValue = maxHealth;
         slider.value = maxHealth;
     }
-
     public void SetCurrentHealth(int currentHealth)
     {
         slider.value = currentHealth;

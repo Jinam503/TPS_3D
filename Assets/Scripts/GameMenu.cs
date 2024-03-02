@@ -7,15 +7,8 @@ using UnityEngine;
 public class GameMenu : MonoBehaviour
 {
     [SerializeField] private GameObject gameMenu;
-    
-    public PlayerInventory inventory;
-
     public bool IsMenuOpened => gameMenu.activeSelf;
 
-    private void Awake()
-    {
-        inventory = GetComponent<PlayerInventory>();
-    }
 
     private void Start()
     {
@@ -37,7 +30,5 @@ public class GameMenu : MonoBehaviour
             Cursor.visible = true;
             gameMenu.SetActive(true);
         }
-        //  This is Temp. It will be changed after Story Comes;
-        inventory.isInventoryOpened = IsMenuOpened;
     }
 }

@@ -11,15 +11,15 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
-  - Zombie
+  - Character
+  - 
   - Damagable Head
   - Damagable Torso
   - Damagable LeftArm
   - Damagable RightArm
   - Damagable LeftLeg
   - Damagable RightLeg
-  - 
+  - DamageCollider
   - 
   - 
   - 

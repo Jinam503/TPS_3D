@@ -15,4 +15,7 @@ public class CharacterSaveData
     public float xPos;
     public float yPos;
     public float zPos;
+
+    [Header("Stats")] 
+    public int health;
 }

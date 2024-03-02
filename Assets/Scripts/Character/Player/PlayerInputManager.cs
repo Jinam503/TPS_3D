@@ -29,7 +29,6 @@ public class PlayerInputManager : MonoBehaviour
     public bool fireInput;
     public bool reloadInput;
     public bool interactInput;
-    public bool openMenuInput;
 
     private void Awake()
     {
@@ -70,8 +69,6 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Reload.performed += i => reloadInput = true;
 
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
-
-            playerControls.PlayerActions.OpenInventory.performed += i => openMenuInput = true;
         }
 
         playerControls.Enable();
@@ -132,7 +129,6 @@ public class PlayerInputManager : MonoBehaviour
         HandleFireInput();
         HandleReloadInput();
         HandleInteractionInput();
-        HandleOpenMenuInput();
     }
     private void HandlePlayerMovementInput()
     {
@@ -166,25 +162,23 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (aimInput)
         {
-            if (!player.playerAttacker.isReloading)
-            {
-                player.playerAttacker.aimRigWeight = 1f;
-                player.playerAttacker.rightHandRigWeight = 1f;
-            }
             player.playerAttacker.isAiming = true;
         }
         else
         {
-            player.playerAttacker.aimRigWeight = 0f;
             player.playerAttacker.isAiming = false;
         }
+        player.playerAttacker.HandleAiming();
     }
     private void HandleFireInput()
     {
-        if (fireInput && !player.playerAttacker.isFiring)
+        if (fireInput)
         {
-            fireInput = false;
             player.playerAttacker.isFiring = true;
+        }
+        else
+        {
+            player.playerAttacker.isFiring = false;
         }
         player.playerAttacker.HandleFire(player.playerEquipment.weaponItem);
     }
@@ -208,14 +202,6 @@ public class PlayerInputManager : MonoBehaviour
                 interactInput = false;
                 player.canInteract = false;
             }
-        }
-    }
-    private void HandleOpenMenuInput()
-    {
-        if (openMenuInput)
-        {
-            openMenuInput = false;
-            player.gameMenu.HandleMenu();
         }
     }
 }

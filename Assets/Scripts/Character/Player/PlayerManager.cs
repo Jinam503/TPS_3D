@@ -12,24 +12,23 @@ public class PlayerManager : CharacterManager
     
     [HideInInspector] public PlayerInventory playerInventory;
     [HideInInspector] public PlayerEquipment playerEquipment;
-    [HideInInspector] public PlayerUIManager playerUIManager;
     [HideInInspector] public PlayerAttacker playerAttacker;
-    [HideInInspector] public GameMenu gameMenu;
+    public GameMenu gameMenu;
     
     private PlayerStatsManager playerStatsManager;
 
     public bool canInteract;
-    public bool isDead;
 
     protected override void Awake()
     {
         base.Awake();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         
         playerLocomotion = GetComponent<PlayerLocomotion>();
-        playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
+        playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
         
         playerEquipment = GetComponent<PlayerEquipment>();
-        playerUIManager = GetComponent<PlayerUIManager>();
         playerInventory = GetComponent<PlayerInventory>();
         playerAttacker = GetComponent<PlayerAttacker>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
@@ -53,6 +52,9 @@ public class PlayerManager : CharacterManager
 
         isPerformingAction = animator.GetBool("IsInteracting");
         animator.SetBool("IsDead", isDead);
+        animator.SetBool("IsAiming", playerAttacker.isAiming);
+        animator.SetBool("IsFiring", playerAttacker.isFiring);
+        animator.SetBool("IsReloading", playerAttacker.isReloading);
     }
 
     public void SaveGameDataToCurrentCharacter(ref CharacterSaveData currentCharacterData)
@@ -60,10 +62,14 @@ public class PlayerManager : CharacterManager
         currentCharacterData.xPos = transform.position.x;
         currentCharacterData.yPos = transform.position.y;
         currentCharacterData.zPos = transform.position.z;
+
+        currentCharacterData.health = playerStatsManager.currentHealth;
     } 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
     {
         Vector3 myPos = new Vector3(currentCharacterData.xPos, currentCharacterData.yPos, currentCharacterData.zPos);
         transform.position = myPos;
+
+        playerStatsManager.currentHealth = currentCharacterData.health;
     }
 }

@@ -22,6 +22,7 @@ public class PlayerLocomotion : CharacterLocomotion
 
     [Header("FLAGS")] 
     public bool isRunning;
+    
     protected override void Awake()
     {
         base.Awake();

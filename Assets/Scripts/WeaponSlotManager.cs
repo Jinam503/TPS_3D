@@ -10,7 +10,7 @@ public class WeaponSlotManager : MonoBehaviour
     private void Awake()
     {
         handSlot = GetComponentInChildren<WeaponHolderSlot>();
-        playerManager = GetComponentInParent<PlayerManager>();
+        playerManager = GetComponent<PlayerManager>();
     }
     public void LoadWeaponOnSlot(WeaponItem weaponItem)
     {

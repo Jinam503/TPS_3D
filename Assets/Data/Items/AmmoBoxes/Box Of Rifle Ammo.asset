@@ -19,6 +19,6 @@ MonoBehaviour:
   isStackable: 1
   description: 
   ammoType: 0
-  ammoQuantity: 12
+  ammoQuantity: 20
   width: 1
   height: 2

@@ -1,56 +1,28 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
-public class PlayerStatsManager : MonoBehaviour
+public class PlayerStatsManager : CharacterStatsManager
 {
-    private PlayerManager player;
-    
-    public int healthLevel = 10;
-    public int maxHealth;
-    public int currentHealth;
-
     public UI_HealthBar healthBar;
 
-    private void Awake()
+    protected override void Awake()
     {
-        player = GetComponent<PlayerManager>();
+        base.Awake();
     }
-
-    void Start()
+    protected override void Start()
     {
-        maxHealth = SetMaxHealthFromHealthLevel();
+        base.Start();
+
+        healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
-
-        //healthBar.SetMaxHealth(maxHealth);
     }
-
-    private int SetMaxHealthFromHealthLevel()
+    protected override void Update()
     {
-        maxHealth = healthLevel * 10;
-
-        return maxHealth;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-
+        base.Update();
+        
         healthBar.SetCurrentHealth(currentHealth);
-
-        player.playerAnimatorManager.PlayTargetActionAnimation("Hit Reaction", false);
-
-        if(currentHealth <= 0)
-        {
-            KillPlayer();
-        }
-    }
-
-    private void KillPlayer()
-    {
-        currentHealth = 0;
-        player.playerAnimatorManager.PlayTargetActionAnimation("Death From The Front", true, false,false);
-        player.isDead = true;
     }
 }

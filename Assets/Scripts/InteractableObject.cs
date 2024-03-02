@@ -50,6 +50,6 @@ public class InteractableObject : MonoBehaviour
 
     protected virtual void Interact(PlayerManager player)
     {
-            Debug.Log("You have Interacted");
+        Debug.Log("You have Interacted");
     }
 }

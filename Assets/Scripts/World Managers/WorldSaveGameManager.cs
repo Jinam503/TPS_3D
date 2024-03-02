@@ -105,7 +105,7 @@ public class WorldSaveGameManager : MonoBehaviour
             currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_01;
             currentChracterData = new CharacterSaveData();
 
-            StartCoroutine(LoadWorldScene());
+            NewGame();
             return;
         }
         
@@ -116,7 +116,7 @@ public class WorldSaveGameManager : MonoBehaviour
             currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_02;
             currentChracterData = new CharacterSaveData();
 
-            StartCoroutine(LoadWorldScene());
+            NewGame();
             return;
         }
         saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_03);
@@ -126,7 +126,7 @@ public class WorldSaveGameManager : MonoBehaviour
             currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_03;
             currentChracterData = new CharacterSaveData();
 
-            StartCoroutine(LoadWorldScene());
+            NewGame();
             return;
         }
         saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_04);
@@ -136,7 +136,7 @@ public class WorldSaveGameManager : MonoBehaviour
             currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_04;
             currentChracterData = new CharacterSaveData();
 
-            StartCoroutine(LoadWorldScene());
+            NewGame();
             return;
         }
         saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_05);
@@ -146,11 +146,16 @@ public class WorldSaveGameManager : MonoBehaviour
             currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_05;
             currentChracterData = new CharacterSaveData();
 
-            StartCoroutine(LoadWorldScene());
+            NewGame();
             return;
         }
         
         TitleScreenManager.instance.DisplayNoFreeCharacterSlotsPopUp();
+    }
+    private void NewGame()
+    {
+        SaveGame();
+        StartCoroutine(LoadWorldScene());
     }
     public void LoadGame()
     {

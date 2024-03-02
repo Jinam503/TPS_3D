@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b45f5fbe1b2ac45987d25d5650355f, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: 
-  itemName: MDRX
+  itemName: M4A1
   itemIcon: {fileID: 0}
   itemID: 
   maxquantity: 1

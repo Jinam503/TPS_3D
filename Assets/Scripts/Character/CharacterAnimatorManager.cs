@@ -11,7 +11,7 @@ public class CharacterAnimatorManager : MonoBehaviour
 
     protected virtual void Awake()
     {
-        character = GetComponentInParent<CharacterManager>();
+        character = GetComponent<CharacterManager>();
         vertical = Animator.StringToHash("Vertical");
         horizontal = Animator.StringToHash("Horizontal");
     }
