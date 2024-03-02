@@ -27,9 +27,16 @@ public class CharacterAnimatorManager : MonoBehaviour
         character.animator.SetFloat(horizontal, horizontalAmount, 0.1f, Time.deltaTime);   
     }
 
-    public virtual void PlayTargetActionAnimation(string targetAnimation, bool isPerformingAction)
+    public virtual void PlayTargetActionAnimation(
+        string targetAnimation,
+        bool isPerformingAction,
+        bool canMove = true,
+        bool canRotate = true)
     {
         character.isPerformingAction = isPerformingAction;
+        character.canMove = canMove;
+        character.canRotate = canRotate;
+        
         character.animator.CrossFade(targetAnimation, 0.2f);
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerUIManager : MonoBehaviour
 {
     public static PlayerUIManager instance;
-
+    
     [Header("Crosshair")]
     public GameObject crosshair;
 

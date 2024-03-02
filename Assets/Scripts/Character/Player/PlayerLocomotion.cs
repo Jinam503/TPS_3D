@@ -6,15 +6,15 @@ public class PlayerLocomotion : CharacterLocomotion
 {
     private PlayerManager player;
 
+
+    [HideInInspector] public float verticalMovement;
+    [HideInInspector] public float horizontalMovement;
+    [HideInInspector] public float moveAmount;
+
+
+    [Header("MOVEMENT SETTINGS")]
     private Vector3 moveDirection;
     private Vector3 targetRotationDirection;
-
-    public float verticalMovement;
-    public float horizontalMovement;
-    public float moveAmount;
-
-
-    [Header("Movement Speeds")]
     [SerializeField] private float walkingSpeed;
     [SerializeField] private float runningSpeed;
     [SerializeField] private float rotationSpeed;
@@ -35,13 +35,11 @@ public class PlayerLocomotion : CharacterLocomotion
         player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, isRunning);
     }
 
-    public void HandleAllMovement(bool isInteracting)
+    public void HandleAllMovement()
     {
-        if (isInteracting)
-        {
-            return;
-        }
-
+        if(player.isPerformingAction)
+           return;
+        
         HandleGroundedMovement();
         HandleRotation();
     }
@@ -55,6 +53,9 @@ public class PlayerLocomotion : CharacterLocomotion
 
     private void HandleGroundedMovement()
     {
+        if (!player.canMove)
+            return;
+        
         GetMovementValues();
         
         moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
@@ -62,7 +63,7 @@ public class PlayerLocomotion : CharacterLocomotion
         moveDirection.Normalize();
         moveDirection.y = 0;
 
-        if (PlayerInputManager.instance.runInput)
+        if (isRunning)
         {
             player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
         }
@@ -81,6 +82,9 @@ public class PlayerLocomotion : CharacterLocomotion
 
     private void HandleRotation()
     {
+        if (!player.canRotate)
+            return;
+        
         Quaternion newRotation;
         Quaternion targetRotation;
 

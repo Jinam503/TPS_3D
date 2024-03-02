@@ -16,7 +16,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerAttacker playerAttacker;
     [HideInInspector] public GameMenu gameMenu;
     
-    private PlayerStats playerStats;
+    private PlayerStatsManager playerStatsManager;
 
     public bool canInteract;
     public bool isDead;
@@ -24,9 +24,7 @@ public class PlayerManager : CharacterManager
     protected override void Awake()
     {
         base.Awake();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
+        
         playerLocomotion = GetComponent<PlayerLocomotion>();
         playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
         
@@ -34,21 +32,19 @@ public class PlayerManager : CharacterManager
         playerUIManager = GetComponent<PlayerUIManager>();
         playerInventory = GetComponent<PlayerInventory>();
         playerAttacker = GetComponent<PlayerAttacker>();
-        playerStats = GetComponent<PlayerStats>();
+        playerStatsManager = GetComponent<PlayerStatsManager>();
         gameMenu = GetComponent<GameMenu>();
 
         PlayerCamera.instance.player = this;
         PlayerInputManager.instance.player = this;
+        WorldSaveGameManager.instance.player = this;
     }
-
-
     protected override void Update()
     {
         base.Update();
 
-        playerLocomotion.HandleAllMovement(isPerformingAction);
+        playerLocomotion.HandleAllMovement();
     }
-
     protected override void LateUpdate()
     {
         base.LateUpdate();
@@ -57,5 +53,17 @@ public class PlayerManager : CharacterManager
 
         isPerformingAction = animator.GetBool("IsInteracting");
         animator.SetBool("IsDead", isDead);
+    }
+
+    public void SaveGameDataToCurrentCharacter(ref CharacterSaveData currentCharacterData)
+    {
+        currentCharacterData.xPos = transform.position.x;
+        currentCharacterData.yPos = transform.position.y;
+        currentCharacterData.zPos = transform.position.z;
+    } 
+    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
+    {
+        Vector3 myPos = new Vector3(currentCharacterData.xPos, currentCharacterData.yPos, currentCharacterData.zPos);
+        transform.position = myPos;
     }
 }

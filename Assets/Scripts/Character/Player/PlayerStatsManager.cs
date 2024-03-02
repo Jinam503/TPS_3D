@@ -1,19 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStatsManager : MonoBehaviour
 {
-    private PlayerManager playerManager;
+    private PlayerManager player;
+    
     public int healthLevel = 10;
     public int maxHealth;
     public int currentHealth;
 
-    public HealthBar healthBar;
+    public UI_HealthBar healthBar;
 
     private void Awake()
     {
-        playerManager = GetComponent<PlayerManager>();
+        player = GetComponent<PlayerManager>();
     }
 
     void Start()
@@ -37,7 +39,7 @@ public class PlayerStats : MonoBehaviour
 
         healthBar.SetCurrentHealth(currentHealth);
 
-        playerManager.playerAnimatorManager.PlayTargetActionAnimation("Hit Reaction", false);
+        player.playerAnimatorManager.PlayTargetActionAnimation("Hit Reaction", false);
 
         if(currentHealth <= 0)
         {
@@ -48,7 +50,7 @@ public class PlayerStats : MonoBehaviour
     private void KillPlayer()
     {
         currentHealth = 0;
-        playerManager.playerAnimatorManager.PlayTargetActionAnimation("Death From The Front", true);
-        playerManager.isDead = true;
+        player.playerAnimatorManager.PlayTargetActionAnimation("Death From The Front", true, false,false);
+        player.isDead = true;
     }
 }

@@ -48,8 +48,8 @@ MonoBehaviour:
   cameraObject: {fileID: 2063260705652308039}
   player: {fileID: 0}
   cameraPivotTransform: {fileID: 2325544832821378906}
-  leftAndRightRotationSpeed: 0
-  upAndDownRotationSpeed: 0
+  leftAndRightRotationSpeed: 30
+  upAndDownRotationSpeed: 30
   minimumPivot: -70
   maximumPivot: 70
   cameraCollisionRadius: 0.2

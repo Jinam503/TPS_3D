@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3364618335053407410
+--- !u!1 &2063782009573260644
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,53 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9197259341860553392}
-  - component: {fileID: 5195654842500410184}
+  - component: {fileID: 7539626975673116610}
+  - component: {fileID: 2007496709881466397}
   m_Layer: 0
-  m_Name: Player Input Manager
+  m_Name: World Sound FX Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9197259341860553392
+--- !u!4 &7539626975673116610
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3364618335053407410}
+  m_GameObject: {fileID: 2063782009573260644}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9208313, y: 3.346659, z: -2.3039262}
+  m_LocalPosition: {x: 12.470525, y: 3.3935263, z: -18.17544}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5195654842500410184
+--- !u!114 &2007496709881466397
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3364618335053407410}
+  m_GameObject: {fileID: 2063782009573260644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 905c8aa6f0742b44783558b6cd70379f, type: 3}
+  m_Script: {fileID: 11500000, guid: 65c9237383da4de4c828e93daa4e87e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  movementInput: {x: 0, y: 0}
-  verticalInput: 0
-  horizontalInput: 0
-  moveAmount: 0
-  cameraInput: {x: 0, y: 0}
-  cameraHorizontalInput: 0
-  cameraVerticalInput: 0
-  runInput: 0
-  aimInput: 0
-  fireInput: 0
-  reloadInput: 0
-  interactInput: 0
-  openMenuInput: 0
+  fireSFX: {fileID: 8300000, guid: 5ee77da0364f4df4d90a1dbd5ab05f84, type: 3}

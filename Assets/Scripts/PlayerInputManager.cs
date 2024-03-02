@@ -42,7 +42,6 @@ public class PlayerInputManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -50,23 +49,6 @@ public class PlayerInputManager : MonoBehaviour
         //  WHEN SCENE CHANGES, RUN THIS LOGIC
         SceneManager.activeSceneChanged += OnSceneChange;
     }
-
-    private void OnSceneChange(Scene oldScene, Scene newScene)
-    {
-        if (newScene.buildIndex == WorldSaveGameManager.instance.GetWorldSceneIndex())
-        {
-            instance.enabled = true;
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            player.transform.position = FindObjectOfType<SpawnPoint>().transform.position;
-        }
-        else
-        {
-            instance.enabled = false;
-        }
-    }
-
     private void OnEnable()
     {
         if (playerControls == null)
@@ -94,7 +76,6 @@ public class PlayerInputManager : MonoBehaviour
 
         playerControls.Enable();
     }
-
     private void OnDestroy()
     {
         SceneManager.activeSceneChanged-= OnSceneChange;
@@ -104,7 +85,21 @@ public class PlayerInputManager : MonoBehaviour
         //  IF WE DESTROY THIS OBJECT, UNSUBSCRIE FROM THIS EVENT
         playerControls.Disable();
     }
+    private void OnSceneChange(Scene oldScene, Scene newScene)
+    {
+        if (newScene.buildIndex == WorldSaveGameManager.instance.GetWorldSceneIndex())
+        {
+            instance.enabled = true;
 
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            player.transform.position = FindObjectOfType<SpawnPoint>().transform.position;
+        }
+        else
+        {
+            instance.enabled = false;
+        }
+    }
     private void OnApplicationFocus(bool hasFocus)
     {
         if (enabled)
@@ -122,22 +117,23 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Update()
     {
+        if (player == null)
+            return;
+        
         HandleAllInputs();
     }
-
     public void HandleAllInputs()
     {
         HandlePlayerMovementInput();
         HandleCameraMovementInput();
         HandleRunning();
-        HandleAiming();
+        HandleAimInput();
         
         HandleFireInput();
         HandleReloadInput();
         HandleInteractionInput();
         HandleOpenMenuInput();
     }
-
     private void HandlePlayerMovementInput()
     {
         verticalInput = movementInput.y;
@@ -150,13 +146,11 @@ public class PlayerInputManager : MonoBehaviour
         
         player.playerAnimatorManager.UpdateAnimatorMovementParameters(0,moveAmount, player.playerLocomotion.isRunning);
     }
-
     private void HandleCameraMovementInput()
     {
         cameraVerticalInput = cameraInput.y;
         cameraHorizontalInput = cameraInput.x;
     }
-
     private void HandleRunning()
     {
         if (runInput && !aimInput)
@@ -168,17 +162,7 @@ public class PlayerInputManager : MonoBehaviour
             player.playerLocomotion.isRunning = false;
         }
     }
-
-    /*private void HandleJumpingInput()
-    {
-        if (inputSpace)
-        {
-            inputSpace = false;
-            playerManager.playerLocomotion.HandleJumping();
-        }
-    }*/
-
-    private void HandleAiming()
+    private void HandleAimInput()
     {
         if (aimInput)
         {
@@ -195,8 +179,6 @@ public class PlayerInputManager : MonoBehaviour
             player.playerAttacker.isAiming = false;
         }
     }
-
-    // ReSharper disable Unity.PerformanceAnalysis
     private void HandleFireInput()
     {
         if (fireInput && !player.playerAttacker.isFiring)
@@ -206,7 +188,6 @@ public class PlayerInputManager : MonoBehaviour
         }
         player.playerAttacker.HandleFire(player.playerEquipment.weaponItem);
     }
-
     private void HandleReloadInput()
     {
         if (reloadInput &&
@@ -218,7 +199,6 @@ public class PlayerInputManager : MonoBehaviour
             player.playerAttacker.HandleReload();
         }
     }
-
     private void HandleInteractionInput()
     {
         if (interactInput)

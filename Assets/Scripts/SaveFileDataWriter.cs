@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 
-public class SaveFileDataWriter : MonoBehaviour
+public class SaveFileDataWriter
 {
     public string saveDataDirectoryPath = "";
     public string saveFileName = "";
@@ -29,7 +29,7 @@ public class SaveFileDataWriter : MonoBehaviour
     }
 
     //  USED TO CREATE A SAVE FILE UPON STARTING A NEW GAME
-    public void CreateNewCharacterSaveFile(CharacterSaveData characterData)
+    public void CreateNewCharacterSaveFile(CharacterSaveData characterData) 
     {
         //  MAKE A PATH TO SAVE THE FILE (A LOCATION ON THE MACHINE)
         string savePath = Path.Combine(saveDataDirectoryPath, saveFileName);

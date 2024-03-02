@@ -13,3 +13,13 @@ public enum AmmoType
     pistol,
     shotgun,
 }
+
+public enum CharacterSlot
+{
+    CharacterSlot_01,
+    CharacterSlot_02,
+    CharacterSlot_03,
+    CharacterSlot_04,
+    CharacterSlot_05,
+    No_Slot,
+}

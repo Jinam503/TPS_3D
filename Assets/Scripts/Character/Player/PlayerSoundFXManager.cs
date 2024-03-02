@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimatorManager : CharacterAnimatorManager
+public class PlayerSoundFXManager : CharacterSoundFXManager
 {
     
 }
