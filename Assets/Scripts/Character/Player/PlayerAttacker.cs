@@ -79,9 +79,9 @@ public class PlayerAttacker : MonoBehaviour
             if (isAiming) 
             {   
                 //  Minus Bullet from magazine
-                //playerManager.playerEquipment.CurrentWeapon.remainingAmmo--;
-                //playerManager.playerUIManager.currentAmmoCountText.text = playerManager.playerEquipment.CurrentWeapon.remainingAmmo.ToString();
-                //        
+                player.playerEquipment.CurrentWeapon.remainingAmmo--;
+                PlayerUIManager.instance.currentAmmoCountText.text = player.playerEquipment.CurrentWeapon.remainingAmmo.ToString();
+                        
                 //  Play Fire Animation
                 player.playerAnimatorManager.PlayTargetActionAnimation(weaponItem.Rifle_Fire, false);
                 
