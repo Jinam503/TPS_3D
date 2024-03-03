@@ -41,7 +41,7 @@ public class PlayerInventory : MonoBehaviour
     private void Update()
     {
         if (!isInventoryOpened) return;
-        
+        Debug.Log(GetTileGridPosition());
         ItemIconDrag();
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -200,6 +200,7 @@ public class PlayerInventory : MonoBehaviour
             position.y += (selectedItem.Height - 1) * ItemGrid.TileSizeHeight / 2;
         }
         
+        
         return SelectedItemGrid.GetTileGridPosition(position);
     }
 
@@ -232,7 +233,7 @@ public class PlayerInventory : MonoBehaviour
             selectedItemRectTransform.position = Input.mousePosition;
             highlighter.SetSiblingIndex(1);
         }
-
+        
     }
 
     public void SetHighLighterSize(InventoryItem targetItem)

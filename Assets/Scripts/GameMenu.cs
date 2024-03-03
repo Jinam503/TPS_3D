@@ -9,6 +9,11 @@ public class GameMenu : MonoBehaviour
     [SerializeField] private GameObject gameMenu;
     public bool IsMenuOpened => gameMenu.activeSelf;
 
+    private void Awake()
+    {
+        gameMenu.SetActive(true);
+        gameMenu.SetActive(false);
+    }
 
     private void Start()
     {

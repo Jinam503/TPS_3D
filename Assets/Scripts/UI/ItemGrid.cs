@@ -28,8 +28,8 @@ public class ItemGrid : MonoBehaviour
     
     public Vector2Int GetTileGridPosition(Vector2 mousePosition)
     {
-        Vector2 positionOnGrid;
-        Vector2Int tileGridPosition = default;
+        Vector2 positionOnGrid; 
+        Vector2Int tileGridPosition = new Vector2Int();
         
         positionOnGrid.x = mousePosition.x - rectTransform.position.x;
         positionOnGrid.y = rectTransform.position.y - mousePosition.y;
@@ -65,14 +65,6 @@ public class ItemGrid : MonoBehaviour
     {
         RectTransform inventoryItemRectTransform = inventoryItem.GetComponent<RectTransform>();
         inventoryItemRectTransform.SetParent(rectTransform);
-
-        for (int x = 0; x < inventoryItem.Width; x++)
-        {
-            for (int y = 0; y < inventoryItem.Height; y++)
-            {
-                inventoryItemSlot[posX + x, posY + y] = inventoryItem;
-            }
-        }
 
         for (int x = 0; x < inventoryItem.Width; x++)
         {
