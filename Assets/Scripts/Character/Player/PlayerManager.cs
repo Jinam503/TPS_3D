@@ -13,7 +13,6 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerInventory playerInventory;
     [HideInInspector] public PlayerEquipment playerEquipment;
     [HideInInspector] public PlayerAttacker playerAttacker;
-    public GameMenu gameMenu;
     
     private PlayerStatsManager playerStatsManager;
 
@@ -32,12 +31,15 @@ public class PlayerManager : CharacterManager
         playerInventory = GetComponent<PlayerInventory>();
         playerAttacker = GetComponent<PlayerAttacker>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
-        gameMenu = GetComponent<GameMenu>();
+    }
 
+    private void Start()
+    {
         PlayerCamera.instance.player = this;
         PlayerInputManager.instance.player = this;
         WorldSaveGameManager.instance.player = this;
     }
+
     protected override void Update()
     {
         base.Update();
@@ -49,7 +51,8 @@ public class PlayerManager : CharacterManager
         base.LateUpdate();
         
         PlayerCamera.instance.HandleAllCameraActions();
-
+        
+        //  ANIMATION PARAMETERS
         isPerformingAction = animator.GetBool("IsInteracting");
         animator.SetBool("IsDead", isDead);
         animator.SetBool("IsAiming", playerAttacker.isAiming);

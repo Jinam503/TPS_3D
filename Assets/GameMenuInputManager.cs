@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class GameMenuInputManager : MonoBehaviour
 {
-    private GameMenu gameMenu;
     private PlayerControls playerControls;
 
     public PlayerManager player;
@@ -27,10 +26,6 @@ public class GameMenuInputManager : MonoBehaviour
     {
         playerControls.Disable();
     }
-    private void Awake()
-    {
-        gameMenu = GetComponent<GameMenu>();
-    }
     private void Update()
     {
         HandleOpenMenuInput();
@@ -41,9 +36,10 @@ public class GameMenuInputManager : MonoBehaviour
         if (openMenuInput)
         {
             openMenuInput = false;
-            gameMenu.HandleMenu();
+            PlayerUIManager.instance.gameMenu.HandleMenu();
         }
 
-        player.playerInventory.isInventoryOpened = gameMenu.IsMenuOpened;
+        player.playerInventory.isInventoryOpened = PlayerUIManager.instance.gameMenu.IsMenuOpened;
     }
+    
 }

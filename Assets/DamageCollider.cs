@@ -37,5 +37,7 @@ public class DamageCollider : MonoBehaviour
         damageEffect.damage = damage;
         
         damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
+        
+        characterDamaged.Clear();
     }
 }

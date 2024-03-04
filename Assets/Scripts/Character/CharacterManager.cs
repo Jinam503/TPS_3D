@@ -13,7 +13,7 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
     [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
 
-[Header("FLAGS")]
+    [Header("FLAGS")]
     public bool isGrounded;
     public bool isPerformingAction;
     public bool canRotate;

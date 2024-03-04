@@ -1693,7 +1693,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123717120}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 14.41394, y: 1.752, z: -14.946}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17824,7 +17824,7 @@ GameObject:
   - component: {fileID: 1116937873}
   - component: {fileID: 1116937872}
   m_Layer: 14
-  m_Name: Cube
+  m_Name: Attack Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21042,6 +21042,7 @@ GameObject:
   - component: {fileID: 1286212408}
   - component: {fileID: 1286212410}
   - component: {fileID: 1286212409}
+  - component: {fileID: 1286212411}
   m_Layer: 5
   m_Name: InGameMenu
   m_TagString: Untagged
@@ -21107,6 +21108,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1286212407}
   m_CullTransparentMesh: 1
+--- !u!114 &1286212411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286212407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ed3e5b9fd633e4fa3c7a4ffa7cf24e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMenu: {fileID: 1286212407}
 --- !u!1 &1290436396
 GameObject:
   m_ObjectHideFlags: 0
@@ -25209,7 +25223,6 @@ GameObject:
   - component: {fileID: 1562312990}
   - component: {fileID: 1562312994}
   - component: {fileID: 1562312996}
-  - component: {fileID: 1562312995}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -25315,22 +25328,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910e2ea5e68f3ed4d994d38136bbcda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 774097376}
+  gameMenu: {fileID: 1286212411}
   crosshair: {fileID: 2065867040}
   currentAmmoCountText: {fileID: 286797573}
   reservedAmmoCountText: {fileID: 949104854}
---- !u!114 &1562312995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1562312989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44ed3e5b9fd633e4fa3c7a4ffa7cf24e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameMenu: {fileID: 1286212407}
 --- !u!114 &1562312996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39557,7 +39559,6 @@ MonoBehaviour:
   playerInventory: {fileID: 0}
   playerEquipment: {fileID: 0}
   playerAttacker: {fileID: 0}
-  gameMenu: {fileID: 0}
   canInteract: 0
 --- !u!1 &4494945603172189859
 GameObject:
@@ -41197,7 +41198,6 @@ MonoBehaviour:
   character: {fileID: 0}
   maxHealth: 100
   currentHealth: 0
-  healthBar: {fileID: 774097376}
 --- !u!1 &7201945712228157124
 GameObject:
   m_ObjectHideFlags: 0
@@ -42937,7 +42937,6 @@ SceneRoots:
   - {fileID: 234557335}
   - {fileID: 543450653134923908}
   - {fileID: 1616170206}
-  - {fileID: 123717122}
   - {fileID: 7737602515669027458}
   - {fileID: 1261922151}
   - {fileID: 1116937876}
@@ -42945,3 +42944,4 @@ SceneRoots:
   - {fileID: 7539626975173519526}
   - {fileID: 7936313761802036049}
   - {fileID: 9197259341286566429}
+  - {fileID: 123717122}

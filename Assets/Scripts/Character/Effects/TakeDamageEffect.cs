@@ -35,16 +35,6 @@ public class TakeDamageEffect : InstantCharacterEffect
         if (character.isDead)
             return;
 
-        CalulateDamage(character);
-    }
-
-    private void CalulateDamage(CharacterManager character)
-    {
-        if (characterCausingDamage != null)
-        {
-            
-        }
-
         character.characterStatsManager.TakeDamage(damage);
     }
 }

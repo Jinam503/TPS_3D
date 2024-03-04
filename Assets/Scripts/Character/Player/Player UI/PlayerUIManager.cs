@@ -8,6 +8,12 @@ public class PlayerUIManager : MonoBehaviour
 {
     public static PlayerUIManager instance;
     
+    [Header("Health")]
+    public UI_HealthBar healthBar;
+
+    [Header("GameMenu")] 
+    public GameMenu gameMenu;
+    
     [Header("Crosshair")]
     public GameObject crosshair;
 

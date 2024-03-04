@@ -14,7 +14,6 @@ public class GameMenu : MonoBehaviour
         gameMenu.SetActive(true);
         gameMenu.SetActive(false);
     }
-
     private void Start()
     {
         gameMenu.SetActive(false);
