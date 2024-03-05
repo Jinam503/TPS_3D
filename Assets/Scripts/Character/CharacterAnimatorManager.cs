@@ -4,29 +4,12 @@ using UnityEngine;
 
 public class CharacterAnimatorManager : MonoBehaviour
 {
-    protected CharacterManager character;
-
-    private int vertical;
-    private int horizontal;
-
+    [SerializeField] protected CharacterManager character;
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
-        vertical = Animator.StringToHash("Vertical");
-        horizontal = Animator.StringToHash("Horizontal");
     }
-    public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue, bool isRunning)
-    {
-        float horizontalAmount = horizontalValue;
-        float verticalAmount = verticalValue;
-        if (isRunning)
-        {
-            verticalAmount = 2;
-        }
-        character.animator.SetFloat(vertical, verticalAmount, 0.1f, Time.deltaTime);   
-        character.animator.SetFloat(horizontal, horizontalAmount, 0.1f, Time.deltaTime);   
-    }
-
+    
     public virtual void PlayTargetActionAnimation(
         string targetAnimation,
         bool isPerformingAction,

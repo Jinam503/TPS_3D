@@ -32,14 +32,13 @@ public class PlayerManager : CharacterManager
         playerAttacker = GetComponent<PlayerAttacker>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
     }
-
     private void Start()
     {
         PlayerCamera.instance.player = this;
         PlayerInputManager.instance.player = this;
         WorldSaveGameManager.instance.player = this;
+        PlayerUIManager.instance.player = this;
     }
-
     protected override void Update()
     {
         base.Update();

@@ -11,10 +11,6 @@ public class TakeDamageEffect : InstantCharacterEffect
     [Header("DAMAGE")]
     public int damage;
 
-    [Header("POISE")] 
-    public int poiseDamage;
-    public bool poiseIsBroken = false;  
-
     [Header("ANIMATIONS")] 
     public bool playDamageAnimation = true;
     public bool manuallySelectDamageAnimation = false;

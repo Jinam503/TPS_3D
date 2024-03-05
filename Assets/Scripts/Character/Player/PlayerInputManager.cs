@@ -123,6 +123,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         HandlePlayerMovementInput();
         HandleCameraMovementInput();
+        
         HandleRunning();
         HandleAimInput();
         
@@ -135,6 +136,12 @@ public class PlayerInputManager : MonoBehaviour
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
 
+        if (player.playerInventory.isInventoryOpened)
+        {
+            verticalInput = 0f;
+            horizontalInput = 0f;
+        }
+
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
 
         if (player == null)
@@ -146,6 +153,12 @@ public class PlayerInputManager : MonoBehaviour
     {
         cameraVerticalInput = cameraInput.y;
         cameraHorizontalInput = cameraInput.x;
+        
+        if (player.playerInventory.isInventoryOpened)
+        {
+            cameraHorizontalInput = 0f;
+            cameraVerticalInput = 0f;
+        }
     }
     private void HandleRunning()
     {

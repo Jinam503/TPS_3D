@@ -28,12 +28,9 @@ public class PlayerLocomotion : CharacterLocomotion
         base.Awake();
         player = GetComponent<PlayerManager>();
     }
-
     protected override void Update()
     {
         base.Update();
-        ;
-        player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, isRunning);
     }
 
     public void HandleAllMovement()
@@ -44,19 +41,14 @@ public class PlayerLocomotion : CharacterLocomotion
         HandleGroundedMovement();
         HandleRotation();
     }
-
     private void GetMovementValues()
     {
         verticalMovement = PlayerInputManager.instance.verticalInput;
         horizontalMovement = PlayerInputManager.instance.horizontalInput;
         moveAmount = PlayerInputManager.instance.moveAmount;
     }
-
     private void HandleGroundedMovement()
     {
-        if (!player.canMove)
-            return;
-        
         GetMovementValues();
         
         moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
@@ -64,6 +56,11 @@ public class PlayerLocomotion : CharacterLocomotion
         moveDirection.Normalize();
         moveDirection.y = 0;
 
+        if (!player.canMove || player.playerInventory.isInventoryOpened)
+        {
+            moveDirection = Vector3.zero;
+        }
+        
         if (isRunning)
         {
             player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
@@ -80,10 +77,9 @@ public class PlayerLocomotion : CharacterLocomotion
             }
         }
     }
-
     private void HandleRotation()
     {
-        if (!player.canRotate)
+        if (!player.canRotate || player.playerInventory.isInventoryOpened)
             return;
         
         Quaternion newRotation;
@@ -109,10 +105,9 @@ public class PlayerLocomotion : CharacterLocomotion
 
         newRotation = Quaternion.LookRotation(targetRotationDirection);
         targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+        
         transform.rotation = targetRotation;
     }
-    
-
     public void HandleRunning()
     {
         if (player.isPerformingAction)

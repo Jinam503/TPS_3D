@@ -11,8 +11,8 @@ TagManager:
   - 
   - Water
   - UI
-  - Character
-  - 
+  - Player
+  - Zombie
   - Damagable Head
   - Damagable Torso
   - Damagable LeftArm

@@ -177,8 +177,6 @@ public class WorldSaveGameManager : MonoBehaviour
         saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
         saveFileDataWriter.saveFileName = saveFileName;
 
-        player.SaveGameDataToCurrentCharacter(ref currentChracterData);
-
         saveFileDataWriter.CreateNewCharacterSaveFile(currentChracterData);
     }
     public void DeleteGame(CharacterSlot characterSlot)

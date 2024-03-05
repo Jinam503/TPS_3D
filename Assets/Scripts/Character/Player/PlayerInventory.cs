@@ -41,7 +41,6 @@ public class PlayerInventory : MonoBehaviour
     private void Update()
     {
         if (!isInventoryOpened) return;
-        Debug.Log(GetTileGridPosition());
         ItemIconDrag();
         if (Input.GetKeyDown(KeyCode.R))
         {

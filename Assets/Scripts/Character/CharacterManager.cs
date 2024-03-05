@@ -19,6 +19,7 @@ public class CharacterManager : MonoBehaviour
     public bool canRotate;
     public bool canMove;
     public bool isDead;
+    
     protected virtual void Awake()
     {
         DontDestroyOnLoad(this);
@@ -30,13 +31,15 @@ public class CharacterManager : MonoBehaviour
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
     }
-
     protected virtual void Update()
     {
         
     }
-
     protected virtual void LateUpdate()
+    {
+        
+    }
+    protected virtual void FixedUpdate()
     {
         
     }

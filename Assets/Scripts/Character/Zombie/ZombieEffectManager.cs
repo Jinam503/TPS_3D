@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieEffectManager : MonoBehaviour
+public class ZombieEffectManager : CharacterEffectsManager
 {
     private ZombieManager zombie;
     private void Awake()

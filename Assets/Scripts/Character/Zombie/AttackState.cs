@@ -60,7 +60,6 @@ public class AttackState : State
             return this;
         }
     }
-
     private void GetNewAttack(ZombieManager zombieManager)
     {
         for (int i = 0; i < zombieAttackActions.Length; i++)
@@ -86,21 +85,19 @@ public class AttackState : State
             potentialAttacks.Clear();
         }
     }
-
     private void AttackTarget(ZombieManager zombieManager)
     {
         if (currentAttack != null)
         {
             hasPerformedAttack = true;
             zombieManager.attackCoolDownTimer = currentAttack.attackCooldown;
-            zombieManager.zombieAnimatorManager.PlayTargetAttackAnimation(currentAttack.attackAnimation);
+            zombieManager.characterAnimatorManager.PlayTargetActionAnimation(currentAttack.attackAnimation, true);
         }
         else
         {
             Debug.Log("Warning: Zombie is attempting to perform an attack, but has no attack");
         }
     }
-
     private void ResetAStateFlags()
     {
         hasPerformedAttack = false;

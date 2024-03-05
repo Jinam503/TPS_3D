@@ -38,7 +38,6 @@ public class ZombieStat : MonoBehaviour
 
         CheckForHealth();
     }
-
     public void DealTorsoDamage(int damage)
     {
         torsoHealth = torsoHealth - damage;
@@ -46,7 +45,6 @@ public class ZombieStat : MonoBehaviour
 
         CheckForHealth();
     }
-
     public void DealArmDamage(bool leftArmDamage, int damage)
     {
         if (leftArmDamage)
@@ -101,14 +99,13 @@ public class ZombieStat : MonoBehaviour
 
         CheckForHealth();
     }
-
     private void CheckForHealth()
     {
         if (overallHealth <= 0)
         {
             overallHealth = 0;
             zombie.isDead = true;
-            zombie.zombieAnimatorManager.PlayTargetActionAnimation("Zombie Dead");
+            zombie.zombieAnimatorManager.PlayTargetActionAnimation("Zombie Dead", true);
         }
     }
 }

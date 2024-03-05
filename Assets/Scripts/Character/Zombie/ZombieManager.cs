@@ -4,36 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ZombieManager : MonoBehaviour
+public class ZombieManager : CharacterManager
 {
     public ZombieAnimatorManager zombieAnimatorManager;
     public ZombieStat zombieStat;
     
     //  The State this character begins on
     public IdleState startingState;
-
-    [Header("Flags")] 
-    public bool isPerformingAction;
-    public bool isDead;
     
     //  The State this character is currently on
     [Header("Current State")]
     [SerializeField] private State currentState;
 
     [Header("Current Target")] 
-    public PlayerManager currentTarget;
+    public CharacterManager currentTarget;
     public Vector3 targetsDirection;
     public float distanceFromCurrentTarget;
     public float viewableAngleFromCurretTarget;
     
-    [Header("Animator")]
-    public Animator animator;
-    
     [Header("NavMeshAgent")]
     public NavMeshAgent zombieNavMeshAgent;
-
-    [Header("RigidBody")] 
-    public Rigidbody zombieRigidbody;
 
     [Header("Locomotion")]
     public float rotationSpeed;
@@ -43,26 +33,31 @@ public class ZombieManager : MonoBehaviour
     public float minimumAttackDistance;
     public float maximumAttackDistance;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         currentState = startingState;
-        animator = GetComponent<Animator>();
         zombieNavMeshAgent = GetComponentInChildren<NavMeshAgent>();
-        zombieRigidbody = GetComponent<Rigidbody>();
         zombieAnimatorManager = GetComponent<ZombieAnimatorManager>();
         zombieStat = GetComponent<ZombieStat>();
     }
-
-    private void FixedUpdate()
+    protected override void LateUpdate()
     {
+        base.LateUpdate();
+    }
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        
         if (!isDead)
         {
             HandleStateMachine();
         }
     }
-
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+        
         zombieNavMeshAgent.transform.localPosition = Vector3.zero;
 
         if (attackCoolDownTimer > 0)

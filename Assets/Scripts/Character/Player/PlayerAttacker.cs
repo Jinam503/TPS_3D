@@ -80,7 +80,6 @@ public class PlayerAttacker : MonoBehaviour
             {   
                 //  Minus Bullet from magazine
                 player.playerEquipment.CurrentWeapon.remainingAmmo--;
-                PlayerUIManager.instance.currentAmmoCountText.text = player.playerEquipment.CurrentWeapon.remainingAmmo.ToString();
                         
                 //  Play Fire Animation
                 player.playerAnimatorManager.PlayTargetActionAnimation(weaponItem.Rifle_Fire, false);
@@ -105,12 +104,15 @@ public class PlayerAttacker : MonoBehaviour
                 if (Physics.Raycast(muzzleSpawnPosition, direction, out hit, bulletRange, shootableLayers))
                 {
                     Debug.DrawLine(muzzleSpawnPosition, hit.point, Color.red, 1);
-                    Debug.Log(hit.collider.gameObject.layer);
                     ZombieEffectManager zombie =
                         hit.collider.gameObject.GetComponentInParent<ZombieEffectManager>();
                     if (zombie != null)
                     {
                         int damage = player.playerEquipment.weaponSlotManager.ReturnCurrentWeaponItemInHandSlot().damage;
+
+                        if (zombie.GetComponent<ZombieManager>().isDead)
+                            return;
+                        
                         if (hit.collider.gameObject.layer == 8)
                         {
                             zombie.DamageZombieHead(damage);
